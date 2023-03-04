@@ -9,7 +9,8 @@ class Api {
   static var BASE_URL = MLocalStorage().getBaseUrl();
 
   static final LOGIN_URL = BASE_URL + "/login";
-  static final SIGN_UP = BASE_URL + "/sign_up";
+  static final CREATE_ACC = BASE_URL + "/create_acc";
+  static final CREATE_PROFILE = BASE_URL + "/create_profile";
   static final LOGOUT_URL = BASE_URL + "/users/logout";
   static final CHANGE_STATE_URL = BASE_URL + "/game" + "/change_state";
   static final GET_CLUE_FROM_CID = BASE_URL + "/game" + "/get_clue_from_cid";
@@ -39,7 +40,26 @@ class Api {
     });
     print(formData);
 
-    return _netUtil.post(SIGN_UP, formData).then((dynamic res) {
+    return _netUtil.post(CREATE_ACC, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> createProfile(String bio, List<String> interests, String city,
+      String dob, String gender, String emergency_phone_number, String imgStr) {
+    formData = FormData.fromMap({
+      "bio": bio,
+      "interests": interests,
+      "city": city,
+      "dob": dob,
+      "gender": gender,
+      "emergency_phone_number": emergency_phone_number,
+      "profile_photo": imgStr
+    });
+    print(formData);
+
+    return _netUtil.post(CREATE_PROFILE, formData).then((dynamic res) {
       print(res.toString());
       return res;
     });

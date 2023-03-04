@@ -100,6 +100,9 @@ class SignUpV2 extends StatelessWidget {
                       } else {
                         GenericUtil.snackGeneric("Failed to create account", "Ensure all fields are filled properly");
                       }
+
+                      //test
+                      Get.off(() => CreateProfile());
                       createAccController.toggleLoginLoading();
                     })
                   ],
