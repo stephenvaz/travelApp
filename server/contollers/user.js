@@ -15,6 +15,7 @@ const {db} = require("../firestore_db");
 //         }
 //     ]
 // }
+
 module.exports.addTrip = async (req, res) => {
     try {
         const tripRef = await db.collection("Users").doc(req.body.email).update({

@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 const db = require("./firestore_db");
 const multer = require("multer");
 const cors = require("cors");
-
+const profile = require('./routes/profileRoutes')
+const friend = require('./routes/friendRoutes')
 
 const app = express();
 const upload = multer();
@@ -23,6 +24,8 @@ const authRoutes = require("./routes/authRoutes");
 //routes
 app.use('/', userRoutes);
 app.use('/', authRoutes);
+app.use('/', profile);
+app.use('/', friend);
 
 app.listen(3000, () => {
     console.log("Listening on port 3000");
