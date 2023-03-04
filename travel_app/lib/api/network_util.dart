@@ -41,11 +41,7 @@ class NetworkUtil {
       }
       return _decoder.convert(response.toString());
     } catch (e) {
-      return HashMap.from({
-        "status": "0",
-        "message":
-            "Error Occurred"
-      });
+      return HashMap.from({"status": "0", "message": "Errojhgygr Occurred"});
     }
   }
 
