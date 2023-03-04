@@ -39,6 +39,18 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.1.1
   google_fonts: ^4.0.3
+  dropdown_search: ^5.0.6
+  firebase_core: ^2.7.0
+  flutter:
+    sdk: flutter
+  flutter_google_places_hoc081098: ^1.2.0
+  geolocator: ^9.0.2
+  get: ^4.6.5
+  get_storage: ^2.1.1
+  google_api_headers: ^1.5.0+1
+  google_maps_flutter: ^2.2.5
+  google_maps_webservice: ^0.0.19
+  search_map_place_updated: ^0.0.4
 
 dev_dependencies:
   flutter_lints: ^2.0.0
