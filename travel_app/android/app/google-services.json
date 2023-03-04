@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "274777467067-dv0oftpdv9qhsigkg3gh5kpdd9097is5.apps.googleusercontent.com",
+          "client_id": "274777467067-asqqrjiuc66np6lpm1i4qpgfqp68db4a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +27,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "274777467067-dv0oftpdv9qhsigkg3gh5kpdd9097is5.apps.googleusercontent.com",
+              "client_id": "274777467067-asqqrjiuc66np6lpm1i4qpgfqp68db4a.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "274777467067-6pahf82e9vc3572fadq7vchutjehpuff.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.travelApp"
+              }
             }
           ]
         }
