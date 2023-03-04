@@ -4,6 +4,52 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 dotenv.config();
  
+const nodemailer = require("nodemailer");
+
+const sendEmail = async (email, subject, text) => {
+  try {
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        service: "gmail",
+      port: 465,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAILPASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: subject,
+      text: text,
+    });
+    console.log("email sent sucessfully");
+  } catch (error) {
+    console.log("email not sent");
+    console.log(error);
+  }
+};
+
+module.exports.verify_mail = (req, res) => {
+    try {
+        
+        const email = req.params.email
+        const userRef = db.collection("Users").doc(email)
+        const userData = userRef.update({ verified_mail: true })
+    }
+    catch (e) {
+        console.log(e);
+        res.json({
+            status: "0",
+            message: "Error occurred.",
+            error: `${e}`,
+        });
+    }
+    
+    res.send("<h1>Mail Verified successfully<h1>")
+}
 
 module.exports.SignUp = (req, res) => {
     try {
@@ -15,11 +61,17 @@ module.exports.SignUp = (req, res) => {
             const token = jwt.sign({email: email}, process.env.password, {
                 expiresIn: "1111h"
             });
+        
+            
             
             res.json({
                 status: "1",
                 message: "SignedIn Successfully",
-                token: token});
+                token: token
+            });
+        
+        const verify_link = `http://localhost:3000/verify_mail/${email}`
+        sendEmail(email, "Verify your Mail", `${verify_link} `)
         // })
 
     }catch(e){

@@ -70,7 +70,7 @@ module.exports.send_friend_req = async (req, res) => {
         }
 
 
-        const toUserRef = await db.collection("Users").doc(toEmail);
+        const toUserRef = db.collection("Users").doc(toEmail);
         const toUserData = await toUserRef.get()
         const toUserDataObj = toUserData.data()
 
