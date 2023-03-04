@@ -3,8 +3,8 @@ const router = express.Router()
 const user = require("../contollers/user");
 const {isAuth} = require("../middleware");
 
-router.post("/add-trip", isAuth, user.addTrip);
-
+router.post("/add-trip", user.addTrip);
+ 
 //get all trips
 router.get("/get-nearby", user.getTrips);
 
