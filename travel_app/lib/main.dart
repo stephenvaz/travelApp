@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/firebase_options.dart';
 import 'package:travel_app/registration.dart';
 
@@ -10,6 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Geolocator.checkPermission();
   await GetStorage.init();
   runApp(const MyApp());
 }
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: Login(),
+      home: MapSearch(),
     );
   }
 }
