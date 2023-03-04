@@ -8,6 +8,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter/material.dart';
 
+//api
+import 'package:travel_app/api/api.dart';
+import 'package:travel_app/utils/MStyles.dart';
+
 class MapSearch extends StatefulWidget {
   const MapSearch({super.key});
 
@@ -37,7 +41,7 @@ class _MapSearchState extends State<MapSearch> {
   DraggableScrollableController dragControl = DraggableScrollableController();
   RxBool isNext = false.obs;
   List<String> selectedChip = [];
-
+  RxBool submitted = false.obs;
   List<String> interestChips = [
     "Scuba diving",
     "Hiking",
@@ -95,8 +99,8 @@ class _MapSearchState extends State<MapSearch> {
   @override
   void initState() {
     super.initState();
-    Geolocator.getCurrentPosition().then((value) => setState(
-        () => startLocation = LatLng(value.latitude, value.longitude)));
+    // Geolocator.getCurrentPosition().then((value) => setState(
+    //     () => startLocation = LatLng(value.latitude, value.longitude)));
   }
 
   @override
@@ -483,38 +487,65 @@ class _MapSearchState extends State<MapSearch> {
                                                 );
                                               }),
                                         ),
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              var newstops = [];
-                                              newstops.add(startObject);
-                                              for (int i = 0;
-                                                  i < submitStops.length;
-                                                  i++) {
-                                                newstops.add(submitStops[i]);
-                                              }
-                                              newstops.add(endObject);
-                                              String status = "Not Yet Started";
-                                              if (DateTime.now()
-                                                  .isAfter(startDate)) {
-                                                status = "Started";
-                                              }
+                                        Obx(() {
+                                          return (!submitted.value)
+                                              ? ElevatedButton(
+                                                  onPressed: () async {
+                                                    submitted.value = true;
+                                                    var newstops = [];
+                                                    newstops.add(startObject);
+                                                    for (int i = 0;
+                                                        i < submitStops.length;
+                                                        i++) {
+                                                      newstops
+                                                          .add(submitStops[i]);
+                                                    }
+                                                    newstops.add(endObject);
+                                                    String status =
+                                                        "Not Yet Started";
+                                                    if (DateTime.now()
+                                                        .isAfter(startDate)) {
+                                                      status = "Started";
+                                                    }
 
-                                              var payload = {
-                                                "start_date": startDate,
-                                                "end_date": endDate,
-                                                "stops": newstops,
-                                                "mode_of_transport": transport,
-                                                "interests": selectedChip,
-                                                "status": status
-                                              };
-                                              print("payload");
-                                              print(payload);
-                                            },
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStatePropertyAll(
-                                                        Colors.blueGrey)),
-                                            child: Text("Submit"))
+                                                    var payload = {
+                                                      "start_date": startDate,
+                                                      "end_date": endDate,
+                                                      "stops": newstops,
+                                                      "mode_of_transport":
+                                                          transport,
+                                                      "interests": selectedChip,
+                                                      "status": status
+                                                    };
+                                                    Map res = await Api()
+                                                        .addTrip(payload);
+                                                    // print(r)
+
+                                                    print("payload");
+                                                    print(payload);
+                                                    if (res['status'] == 1) {
+                                                      print("successful");
+                                                      Get.closeAllSnackbars();
+                                                      Get.snackbar('Succesful',
+                                                          "Trip Added",
+                                                          backgroundColor:
+                                                              MStyles.pColor);
+
+                                                              //TODO: NAVIGATE TO SOME OTHER SCREEN, MAYBE PROFILE OR JUST POP BACK
+                                                    } else {
+                                                      Get.closeAllSnackbars();
+                                                      Get.snackbar("Error",
+                                                          "Please try again");
+                                                    }
+                                                    submitted.value = false;
+                                                  },
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStatePropertyAll(
+                                                              Colors.blueGrey)),
+                                                  child: Text("Submit"))
+                                              : const CircularProgressIndicator();
+                                        })
                                       ],
                                     );
                             })
