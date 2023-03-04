@@ -147,7 +147,7 @@ class _MapSearchState extends State<MapSearch> {
               builder: (context, scrollController) {
                 return Container(
                   decoration: BoxDecoration(
-                      color: Colors.blueAccent,
+                      color: MStyles.pColor,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20))),
@@ -259,9 +259,12 @@ class _MapSearchState extends State<MapSearch> {
                                       },
                                       style: ButtonStyle(
                                           backgroundColor:
-                                              MaterialStateProperty.all(Colors
-                                                  .blueGrey
-                                                  .withOpacity(0.5)),
+                                              MaterialStatePropertyAll(
+                                                  Colors.transparent),
+                                          side: MaterialStatePropertyAll(
+                                              BorderSide(
+                                                  color: Colors.white,
+                                                  width: 2)),
                                           shape: MaterialStateProperty.all(
                                               RoundedRectangleBorder(
                                                   borderRadius:
@@ -531,7 +534,7 @@ class _MapSearchState extends State<MapSearch> {
                                                           backgroundColor:
                                                               MStyles.pColor);
 
-                                                              //TODO: NAVIGATE TO SOME OTHER SCREEN, MAYBE PROFILE OR JUST POP BACK
+                                                      //TODO: NAVIGATE TO SOME OTHER SCREEN, MAYBE PROFILE OR JUST POP BACK
                                                     } else {
                                                       Get.closeAllSnackbars();
                                                       Get.snackbar("Error",
@@ -540,9 +543,19 @@ class _MapSearchState extends State<MapSearch> {
                                                     submitted.value = false;
                                                   },
                                                   style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStatePropertyAll(
-                                                              Colors.blueGrey)),
+                                                    side:
+                                                        MaterialStatePropertyAll(
+                                                            BorderSide(
+                                                                width: 2,
+                                                                color: Colors
+                                                                    .white)),
+                                                    shape: MaterialStateProperty
+                                                        .all(RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        32))),
+                                                  ),
                                                   child: Text("Submit"))
                                               : const CircularProgressIndicator();
                                         })
