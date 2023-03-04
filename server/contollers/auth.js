@@ -62,3 +62,24 @@ module.exports.login = async (req, res) => {
     
         })
 }
+
+module.exports.create_account = (req, res) => {
+
+    const data = req.body.data
+    console.log(data)
+    let userEmail = data.email
+
+    try {
+        const userRef = db.collection("Users").doc(userEmail)
+        const userDataObj = userRef.set(data)
+        
+        res.send("updated")
+    }
+    catch (e) {
+        res.json({
+            status: "0",
+            message: "Error occurred.",
+            error: `${e}`
+        });
+    }
+}

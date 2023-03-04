@@ -8,4 +8,5 @@ router.post("/add-trip", isAuth, user.addTrip);
 //get all trips
 router.get("/get-nearby", user.getTrips);
 
+
 module.exports = router;
