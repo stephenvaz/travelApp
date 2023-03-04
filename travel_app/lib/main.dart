@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.white),
           // home: const BasicIntro(),
           // home: const LoginScreen(),
-          home: LoginScreenV3(),
-          // home: MapSearch(),
+          // home: LoginScreenV3(),
+          home: MapSearch(),
         );
       },
     );
