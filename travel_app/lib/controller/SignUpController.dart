@@ -8,6 +8,7 @@ import 'package:travel_app/utils/generic_util.dart';
 class SignUpController extends GetxController {
   // final email = "".obs;
   final email = TextEditingController();
+  final phone = TextEditingController();
   final password = TextEditingController();
   final name = TextEditingController();
 

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app/api/api.dart';
 import 'package:travel_app/components/custom_text_field.dart';
 import 'package:travel_app/controller/SignUpController.dart';
 import 'package:travel_app/utils/MStyles.dart';
+import 'package:travel_app/utils/generic_util.dart';
 import 'package:travel_app/views/create_profile.dart';
 
 class SignUpV2 extends StatelessWidget {
@@ -54,7 +56,7 @@ class SignUpV2 extends StatelessWidget {
                     ),
                     MTextField(
                       label: "Phone Number",
-                      mcont: createAccController.email,
+                      mcont: createAccController.phone,
                     ),
                     MTextField(
                       label: "Email",
@@ -83,8 +85,22 @@ class SignUpV2 extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    buildElevatedButton("CREATE", () {
-                      Get.off(() => CreateProfile());
+                    // SizedBox(height: 16,),
+                    buildElevatedButton("CREATE", () async {
+                      createAccController.toggleLoginLoading();
+                      final res = await Api().createAccount(
+                          createAccController.name.text,
+                          createAccController.phone.text,
+                          createAccController.email.text,
+                          createAccController.password.text);
+                      if (res["status"] == 1) {
+                        GenericUtil.snackSuccess();
+                        Get.off(() => CreateProfile());
+
+                      } else {
+                        GenericUtil.snackGeneric("Failed to create account", "Ensure all fields are filled properly");
+                      }
+                      createAccController.toggleLoginLoading();
                     })
                   ],
                 ),
@@ -94,6 +110,23 @@ class SignUpV2 extends StatelessWidget {
             // Align(
             //   child: buildElevatedButton("SUBMIT", () {}),
             // )
+
+            Obx(() => !createAccController.isLoginLoading.value
+                ? SizedBox()
+                : TweenAnimationBuilder(
+              tween: Tween(begin: 0, end: 0.5),
+              duration: Duration(milliseconds: 500),
+              builder:
+                  (BuildContext context, Object? value, Widget? child) {
+                return Positioned.fill(
+                    child: Container(
+                      color: MStyles.darkBgColor
+                          .withOpacity(double.parse(value.toString())),
+                      child: Center(child: CircularProgressIndicator()),
+                    ));
+              },
+            ))
+
           ],
         ),
       ),
@@ -122,5 +155,3 @@ ElevatedButton buildElevatedButton(text, onPressed) {
                 bottomRight: Radius.circular(100)))),
   );
 }
-
-
