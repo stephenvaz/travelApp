@@ -114,16 +114,16 @@ class Api {
     });
   }
 
-  Future<dynamic> signUp(
-      String email, String password, List<String> interestArr) {
-    formData = FormData.fromMap({"email": email, "password": password});
-    print(formData);
-
-    return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
-      print(res.toString());
-      return res;
-    });
-  }
+  // Future<dynamic> signUp(
+  //     String email, String password, List<String> interestArr) {
+  //   formData = FormData.fromMap({"email": email, "password": password});
+  //   print(formData);
+  //
+  //   return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
+  //     print(res.toString());
+  //     return res;
+  //   });
+  // }
 
 
   Future<dynamic> logout({logout_loc_lat = "-999", logout_loc_lng = "-999"}) {

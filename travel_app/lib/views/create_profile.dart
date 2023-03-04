@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:travel_app/components/custom_text_field.dart';
 import 'package:travel_app/controller/CreateProfileController.dart';
 import 'package:travel_app/utils/MStyles.dart';
@@ -9,7 +12,38 @@ import 'package:travel_app/views/sign_upv2.dart';
 final createProfileController = CreateProfileController();
 
 class CreateProfile extends StatelessWidget {
-  const CreateProfile({Key? key}) : super(key: key);
+  var imageFile;
+  late RxBool clicked;
+
+  CreateProfile({Key? key}) : super(key: key);
+
+  _getFromGallery() async {
+    PickedFile pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    ) as PickedFile;
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      clicked.value = true;
+    } else {
+      clicked.value = false;
+    }
+  }
+
+  _getFromCamera() async {
+    XFile pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    ) as XFile;
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      clicked.value = true;
+    } else {
+      clicked.value = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +98,43 @@ class CreateProfile extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
+                      print('fsdf');
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(16),
+                                    topRight: Radius.circular(16)),
+                              ),
+                              // height: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListTile(
+                                      onTap: () {
+                                        _getFromGallery();
+                                      },
+                                      leading: Icon(Icons.image),
+                                      title: Text("Gallery"),
+                                    ),
+                                    ListTile(
+                                      onTap: () {
+                                        _getFromCamera();
+                                      },
+                                      leading: Icon(Icons.camera),
+                                      title: Text("Camera"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
 
                     },
                     child: CircleAvatar(

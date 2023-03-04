@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app/api/api.dart';
-import 'package:travel_app/components/custom_text_field.dart';
 import 'package:travel_app/controller/SignUpController.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/utils/generic_util.dart';
