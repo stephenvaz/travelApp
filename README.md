@@ -6,6 +6,6 @@ req.body = {
             "name",
             "password",
             "dob",
-            "interests",
+            "interests" = ["str"],
             "bio"
 }
