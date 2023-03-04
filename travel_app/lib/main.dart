@@ -12,6 +12,7 @@ import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/utils/constants.dart';
 import 'package:travel_app/views/login_screen_v3.dart';
 import 'package:travel_app/views/sign_up.dart';
+import 'package:travel_app/views/sign_upv2.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,8 +47,10 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.white),
           // home: const BasicIntro(),
           // home: const LoginScreen(),
-          home: LoginScreenV3(),
+          // home: LoginScreenV3(),
+          // home: LoginScreenV3(),
           // home: MapSearch(),
+          home: SignUpV2(),
         );
       },
     );

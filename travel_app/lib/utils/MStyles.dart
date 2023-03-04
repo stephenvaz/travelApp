@@ -21,10 +21,14 @@ class MStyles {
   static final pColorWithTransparency  = Color(0xcc2e92da);
 
   static final primaryTextStyle = GoogleFonts.poppins(
-    // fontFamily: 'Abraham',
-      color: Colors.black,
-      fontSize: 18.w,
-      fontWeight: FontWeight.w500);
+    fontWeight: FontWeight.w600,
+    fontSize: 18.w,
+  );
+  // static final primaryTextStyle = GoogleFonts.poppins(
+  //   // fontFamily: 'Abraham',
+  //     color: Colors.black,
+  //     fontSize: 18.w,
+  //     fontWeight: FontWeight.w500);
 
   static final bgv2 = Color(0xFF6199F7);
 

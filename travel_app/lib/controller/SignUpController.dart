@@ -9,9 +9,11 @@ class SignUpController extends GetxController {
   // final email = "".obs;
   final email = TextEditingController();
   final password = TextEditingController();
+  final name = TextEditingController();
 
   final isHidden = true.obs;
   final isLoginLoading = false.obs;
+
 
   // LoginController() {
   //   setBaseUrl();
