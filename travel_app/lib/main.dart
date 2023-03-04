@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:travel_app/components/community.dart';
 import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/components/profile.dart';
 import 'package:travel_app/firebase_options.dart';

@@ -6,7 +6,9 @@ import 'package:travel_app/utils/MLocalStorage.dart';
 class Api {
   NetworkUtil _netUtil = new NetworkUtil();
 
-  static var BASE_URL = MLocalStorage().getBaseUrl();
+  //  static var BASE_URL = MLocalStorage().getBaseUrl();
+  static var BASE_URL =
+  "https://dd15-2402-3a80-1646-8b92-346c-4f9-e9a-bf56.in.ngrok.io";
 
   static final LOGIN_URL = BASE_URL + "/login";
   static final CREATE_ACC = BASE_URL + "/create_acc";
@@ -17,6 +19,9 @@ class Api {
   static final GET_NEXT_CLUE_URL = BASE_URL + "/game" + "/get_next_clue";
   static final POWERUPS_URL = BASE_URL + "/game" + "/powerups";
   static final GET_HINT = BASE_URL + "/game" + "/get_hint";
+  static final ADD_TRIP = BASE_URL + "/add-trip";
+  static final CREATE_COMMUNITY = BASE_URL + "/create";
+  static final GET_COMMUNITY = BASE_URL + "/get-comm";
   var formData;
 
   Future<dynamic> login(String email, String password) {
@@ -57,6 +62,50 @@ class Api {
       "emergency_phone_number": emergency_phone_number,
       "profile_photo": imgStr
     });
+
+    return _netUtil.post(CREATE_PROFILE, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+    Future<dynamic> addTrip(var data) {
+    // print('performing post');
+    // print(jsonEncode(data));
+    formData = FormData.fromMap(data);
+    print(formData);
+    return _netUtil.post(ADD_TRIP, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> createCommunity(var data) {
+    // print('performing post');
+    // print(jsonEncode(data));
+    formData = FormData.fromMap(data);
+    print(formData);
+    return _netUtil.post(CREATE_COMMUNITY, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> getCommunitites() {
+    // print('performing post');
+    // print(jsonEncode(data));
+    // formData = FormData.fromMap(data);
+    print(formData);
+    return _netUtil.post(GET_COMMUNITY, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> signUp(
+      String email, String password, List<String> interestArr) {
+//no do it their side
+    formData = FormData.fromMap({"email": email, "password": password});
     print(formData);
 
     return _netUtil.post(CREATE_PROFILE, formData).then((dynamic res) {
@@ -75,6 +124,7 @@ class Api {
       return res;
     });
   }
+
 
   Future<dynamic> logout({logout_loc_lat = "-999", logout_loc_lng = "-999"}) {
     return _netUtil
