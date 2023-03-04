@@ -156,33 +156,6 @@ class _MapSearchState extends State<MapSearch> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // Obx(() {
-                                //   return (isNext.value)
-                                //       ? IconButton(
-                                //           //TODO
-                                //           constraints: BoxConstraints.tightFor(
-                                //               height: 10),
-                                //           padding: EdgeInsets.zero,
-                                //           onPressed: () {
-                                //             isNext.value = false;
-                                //             dragControl.animateTo(0.30,
-                                //                 duration:
-                                //                     Duration(milliseconds: 500),
-                                //                 curve: Curves.linear);
-                                //           },
-                                //           icon: Padding(
-                                //             padding: const EdgeInsets.only(
-                                //                 top: 16.0),
-                                //             child: Icon(
-                                //                 Icons.arrow_downward_rounded),
-                                //           ))
-                                //       : const SizedBox();
-                                // }),
-                              ],
-                            ),
                             Stack(
                               children: [
                                 Padding(
@@ -215,36 +188,6 @@ class _MapSearchState extends State<MapSearch> {
                                         : const SizedBox();
                                   }),
                                 )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                //TODO: center the text and close button to the right
-                                // Spacer(flex: 1),
-
-                                // Text(
-                                //   "Add Trip",
-                                //   style: TextStyle(
-                                //       color: Colors.white,
-                                //       fontSize: 24,
-                                //       fontWeight: FontWeight.bold),
-                                // ),
-                                // Spacer(flex: 1),
-                                // Obx(() {
-                                //   return (isNext.value)
-                                //       ? IconButton(
-                                //           onPressed: () {
-                                //             isNext.value = false;
-                                //             dragControl.animateTo(0.30,
-                                //                 duration:
-                                //                     Duration(milliseconds: 500),
-                                //                 curve: Curves.linear);
-                                //           },
-                                //           icon: Icon(
-                                //               Icons.arrow_downward_rounded))
-                                //       : const SizedBox();
-                                // })
                               ],
                             ),
                             const SizedBox(
@@ -550,12 +493,19 @@ class _MapSearchState extends State<MapSearch> {
                                                 newstops.add(submitStops[i]);
                                               }
                                               newstops.add(endObject);
+                                              String status = "Not Yet Started";
+                                              if (DateTime.now()
+                                                  .isAfter(startDate)) {
+                                                status = "Started";
+                                              }
+
                                               var payload = {
                                                 "start_date": startDate,
                                                 "end_date": endDate,
                                                 "stops": newstops,
                                                 "mode_of_transport": transport,
-                                                "interests": selectedChip
+                                                "interests": selectedChip,
+                                                "status": status
                                               };
                                               print("payload");
                                               print(payload);
