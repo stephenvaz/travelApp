@@ -25,6 +25,21 @@ class Api {
       "email": email,
       "password": password
     });
+    print(formData);
+
+    return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> signUp(String email, String password, List<String> interestArr) {
+//no do it their side
+    formData = FormData.fromMap({
+      "email": email,
+      "password": password
+    });
+    print(formData);
 
     return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
       print(res.toString());

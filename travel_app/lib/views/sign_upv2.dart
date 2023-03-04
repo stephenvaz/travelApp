@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:travel_app/controller/LoginController.dart';
 import 'package:travel_app/utils/MStyles.dart';
 
-class LoginScreenV3 extends StatelessWidget {
-  LoginScreenV3({Key? key}) : super(key: key);
+class SignUpV2 extends StatelessWidget {
+  SignUpV2({Key? key}) : super(key: key);
 
   LoginController loginController = LoginController();
 

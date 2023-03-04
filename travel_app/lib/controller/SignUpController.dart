@@ -5,7 +5,7 @@ import 'package:travel_app/api/api.dart';
 import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/generic_util.dart';
 
-class LoginController extends GetxController {
+class SignUpController extends GetxController {
   // final email = "".obs;
   final email = TextEditingController();
   final password = TextEditingController();
@@ -21,7 +21,7 @@ class LoginController extends GetxController {
     isHidden.value = !isHidden.value;
   }
 
-  login() async {
+  signUp() async {
     toggleLoginLoading();
     await setBaseUrl();
     final Map res = await Api().login(email.text, password.text);
