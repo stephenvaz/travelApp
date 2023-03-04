@@ -13,17 +13,20 @@ const { db } = require("../firestore_db");
 //   }
 //   }
 module.exports.update_profile = async (req, res) => {
-    const data = req.body.data;
-    // console.log(data) 
+    const data = req.body;
+    // console.log(data)
     let userEmail = data.email
-    delete data.email 
+    delete data.email
     try {
 
         const userRef = db.collection("Users").doc(userEmail);
         const response = await userRef.update(data);
-        res.send("Updated")
-        
-    }catch(e){
+        res.json({
+            status: 1,
+            message: "success",
+        });
+
+    } catch (e) {
         console.log(e);
         res.json({
             status: "0",
