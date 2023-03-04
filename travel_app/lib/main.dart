@@ -12,6 +12,7 @@ import 'package:travel_app/registration.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/utils/constants.dart';
 import 'package:travel_app/views/login_screen_v3.dart';
+import 'package:travel_app/views/messagin_screen.dart';
 import 'package:travel_app/views/sign_up.dart';
 import 'package:travel_app/views/sign_upv2.dart';
 
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
           // home: LoginScreenV3(),
           // home: LoginScreenV3(),
           // home: MapSearch(),
-          home: SignUpV2(),
+          // home: SignUpV2(),
+          home: MessagingScreen(),
         );
       },
     );
