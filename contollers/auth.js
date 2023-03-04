@@ -1,45 +1,64 @@
-// const firebase = require("firebase/app");
-// const db = require("../firestore_db");
-// const {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} = require("firebase/auth");
-// const auth = require("../firestore_db");
-// module.exports.register = (req, res) => {
-//   try {
-//     const {email, username, password} = req.body;
-//     createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//     const user = userCredential.user;
-//       res.send("added user");
-//       console.log(user);
-//     })
-//     .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//       console.log(error);
-//     });
-//     res.redirect('/');
-//     } catch(e) {
-//       console.log(e)
-//     res.redirect('/register');
-//   }
-// }
-// module.exports.login = (req, res) => {
-//   const {email, password} = req.body;
-//   signInWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     res.send("Logged in");
-//   var user = userCredential.user;
-//   })
-//   .catch((error) => {
-//   var errorCode = error.code;
-//   var errorMessage = error.message;
-//   });
-//   res.redirect('/');
-// }
+const {db} = require("../firestore_db");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const bcrypt = require("bcryptjs");
+dotenv.config();
+ 
 
-// module.exports.logout =  (req, res) => {
-//   signOut().then(() => {
-//     res.redirect('/login');
-//   }).catch((error) => {
-//     console.log(error);
-//   });
-// }
+module.exports.SignUp = (req, res) => {
+    try {
+        const { email, name, password, dob, interests } = req.body;
+        const saltRounds = 10;
+        // hash(password, saltRounds, (err, hash) => {
+            const userRef = db.collection("Users").doc(email).set({email, name, password, dob, interests, tripDetails: []});
+        // }).then(() => {
+            const token = jwt.sign({email: email}, process.env.password, {
+                expiresIn: "1111h"
+            });
+            
+            res.json({
+                status: "1",
+                message: "SignedIn Successfully",
+                token: token});
+        // })
+
+    }catch(e){
+        console.log(e);
+        res.json({
+            status: "0",
+            message: "Error occurred.",
+            error: `${e}`,
+        });
+    }
+}
+
+module.exports.login = async (req, res) => {
+    const {email} = req.body;
+    console.log(req.body);
+    const salts = 10;
+    const user = await db.collection("Users").doc(email).get();
+    if(!user.exists){
+        return res.json({
+            status: "0",
+            message: "Error occurred.",
+            error: `${e}`,
+        })
+    }
+    console.log(req.body.password, user.data().password);
+    const hash = await bcrypt.hash(user.data().password, salts);
+    console.log(hash);
+    bcrypt.compare(req.body.password, hash).then((result) => {
+            if(result){
+                res.json({
+                    status: "1",
+                    message: "LoggedIn Successfully"
+                });
+            }else {
+                res.json({
+                    status: "0",
+                    message: "Passwords do not match"
+                });
+            }
+    
+        })
+}

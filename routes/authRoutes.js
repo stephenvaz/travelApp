@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router()
 const auth = require("../contollers/auth");
 
-// router.post('/login', auth.login);
-// router.post('/register', auth.register);
-// router.post('/logout', auth.logout);
+router.post("/sign-up", auth.SignUp);
+router.post("/login", auth.login);
 
 module.exports = router;

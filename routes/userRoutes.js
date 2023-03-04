@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router()
 const user = require("../contollers/user");
+const {isAuth} = require("../middleware");
 
-// router.post('/login', auth.login);
-// router.post('/register', auth.register);
-// router.post('/logout', auth.logout);
-router.post("/sign-up", user.SignUp);
+router.post("/add-trip", isAuth, user.addTrip);
+
+//get all trips
+router.get("/get-nearby", user.getTrips);
 
 module.exports = router;

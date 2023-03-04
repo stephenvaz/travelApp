@@ -1,31 +1,43 @@
+const { FieldValue } = require("@google-cloud/firestore");
 const {db} = require("../firestore_db");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
 
-dotenv.config();
-
-module.exports.SignUp = (req, res) => {
+// {
+//     "email": "semic@gmail.com",
+//     "end_date": "March 10, 2023 at 12:00:00 AM UTC+5:30",
+//     "mode_of_transport": "Bus",
+//     "start_date": "March 4, 2023 at 12:00:00 AM UTC+5:30",
+//     "status":  "Completed",
+//     "stops": [
+//         {
+//             "lat": 46,
+//             "long": 56,
+//             "loc_name": "Mumbai"
+//         }
+//     ]
+// }
+module.exports.addTrip = async (req, res) => {
     try {
-        const { email } = req.body;
-        const userRef = db.collection("Users").add(req.body);
-        const token = jwt.sign({email: email}, process.env.password, {
-            expiresIn: "1111h"
-          });
-        // console.log("Sign Up", email, token);
-        res.json({
-            status: "1",
-            message: "Logged In Successfully",
-            token: token})
+        const tripRef = await db.collection("Users").doc(req.body.email).update({
+            tripDetails: FieldValue.arrayUnion(req.body.tripDetails)
+        })
+        res.send("added");
     }catch(e){
         console.log(e);
-        res.send("0");res.json({
+        res.json({
             status: "0",
             message: "Error occurred.",
-            error: `${error}`,
+            error: `${e}`,
         });
     }
 }
-module.exports.login = () => {
 
+module.exports.getTrips = async (req, res) => {
+    const trips = await db.collection("Users").get()
+    const tripArr = []
+    trips.forEach(doc => {
+        if(doc.data().email != req.body.email){
+            tripArr.push(doc.data().tripDetails)
+        }
+    })
+    res.send(tripArr);
 }
-
