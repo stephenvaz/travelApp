@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -13,7 +14,9 @@ final createProfileController = CreateProfileController();
 
 class CreateProfile extends StatelessWidget {
   var imageFile;
-  late RxBool clicked;
+  RxBool clicked = true.obs;
+
+  late String img64;
 
   CreateProfile({Key? key}) : super(key: key);
 
@@ -26,9 +29,15 @@ class CreateProfile extends StatelessWidget {
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
       clicked.value = true;
+      final bytes = await imageFile.readAsBytes();
+      img64 = base64Encode(bytes);
+      createProfileController.imgString = img64;
+
     } else {
       clicked.value = false;
     }
+
+    Get.back();
   }
 
   _getFromCamera() async {
@@ -39,10 +48,17 @@ class CreateProfile extends StatelessWidget {
     ) as XFile;
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
+      final bytes = await imageFile.readAsBytes();
+      img64 = base64Encode(bytes);
+
+      createProfileController.imgString = img64;
+
       clicked.value = true;
     } else {
       clicked.value = false;
     }
+
+    Get.back();
   }
 
   @override
@@ -58,7 +74,7 @@ class CreateProfile extends StatelessWidget {
       createProfileController.dob.text = dt!.toIso8601String();
     };
 
-    var listT= ["Male", "Female", "Non-binary"];
+    var listT = ["Male", "Female", "Non-binary"];
 
     var onTap2Gender = () async {
       showDialog(
@@ -68,12 +84,19 @@ class CreateProfile extends StatelessWidget {
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: Text("Select Gender", style: MStyles.primaryTextStyle.copyWith(fontWeight: FontWeight.w100),),
+                child: Text(
+                  "Select Gender",
+                  style: MStyles.primaryTextStyle
+                      .copyWith(fontWeight: FontWeight.w100),
+                ),
               ),
-              ...listT.map((e) => TextButton(onPressed: () {
-                createProfileController.gender.text = e;
-                Get.back();
-              }, child: Text(e),))
+              ...listT.map((e) => TextButton(
+                    onPressed: () {
+                      createProfileController.gender.text = e;
+                      Get.back();
+                    },
+                    child: Text(e),
+                  ))
             ]),
           );
         },
@@ -109,8 +132,7 @@ class CreateProfile extends StatelessWidget {
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(16),
                                     topRight: Radius.circular(16)),
-                              ),
-                              // height: 200,
+                              ), // height: 200,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -135,10 +157,26 @@ class CreateProfile extends StatelessWidget {
                               ),
                             );
                           });
-
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.camera_alt, size: 40,),
+                      child: Obx(
+                        () => !clicked.value
+                            ? Icon(
+                                Icons.camera_alt,
+                                size: 40,
+                              )
+                            : Container(
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(60))),
+                                child: Image.file(
+                                  File(imageFile.path),
+                                  fit: BoxFit.fitWidth,
+                                  width: 120,
+                                ),
+                              ),
+                      ),
                       // child: Container(width: 100,height: 100,)
                       radius: 60,
                     ),
@@ -202,7 +240,7 @@ class CreateProfile extends StatelessWidget {
                     readOnly: true,
                   ),
                   MTextField(
-                      label: "Emergency Contact Number",
+                      label: "Emergency Contact Numbers",
                       mcont: createProfileController.emergencyNum),
                   Text(
                     "In case of emergencies like medical conditions or mishap, emergency contacts will be notified about your last location and your adventurer friends would be able to react out to them to tell about your condition",
@@ -236,20 +274,18 @@ class CreateProfile extends StatelessWidget {
           Obx(() => !createProfileController.isLoginLoading.value
               ? SizedBox()
               : TweenAnimationBuilder(
-            tween: Tween(begin: 0, end: 0.5),
-            duration: Duration(milliseconds: 500),
-            builder:
-                (BuildContext context, Object? value, Widget? child) {
-              return Positioned.fill(
-                  child: Container(
-                    color: MStyles.darkBgColor
-                        .withOpacity(double.parse(value.toString())),
-                    child: Center(child: CircularProgressIndicator()),
-                  ));
-            },
-          ))
-
-
+                  tween: Tween(begin: 0, end: 0.5),
+                  duration: Duration(milliseconds: 500),
+                  builder:
+                      (BuildContext context, Object? value, Widget? child) {
+                    return Positioned.fill(
+                        child: Container(
+                      color: MStyles.darkBgColor
+                          .withOpacity(double.parse(value.toString())),
+                      child: Center(child: CircularProgressIndicator()),
+                    ));
+                  },
+                ))
         ],
       ),
     ));

@@ -52,8 +52,9 @@ class Api {
   }
 
   Future<dynamic> createProfile(String bio, List<String> interests, String city,
-      String dob, String gender, String emergency_phone_number, String imgStr) {
+      String dob, String gender, List<String> emergency_phone_number, String imgStr) {
     formData = FormData.fromMap({
+    "email": MLocalStorage().getEmailId(),
       "bio": bio,
       "interests": interests,
       "city": city,

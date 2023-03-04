@@ -32,12 +32,14 @@ class CreateProfileController extends GetxController {
     toggleLoginLoading();
 
     final res = await Api().createProfile(bio.text, interests.text.split(" "),
-        city.text, dob.text, gender.text, emergencyNum.text, imgString);
+        city.text, dob.text, gender.text, emergencyNum.text.split(" "), imgString);
     if (res["status"] != 1) {
       GenericUtil.snackGeneric(
           "Failed to create profile", "Ensure all fields are filled properly");
     } else {
       GenericUtil.snackSuccess();
+
+      //todo add home route here
       Get.off(() => SignUpV2());
     }
     toggleLoginLoading();

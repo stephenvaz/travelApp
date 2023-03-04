@@ -26,6 +26,16 @@ class MLocalStorage {
     return tid ?? "-999";
   }
 
+  String getEmailId() {
+    final email = box.read("email");
+    return email ?? "-999";
+  }
+
+  void setEmailId(email) {
+    box.write("email", email);
+
+  }
+
   String getToken() {
     final tid = box.read("token");
     print(tid);
