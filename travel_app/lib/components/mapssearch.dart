@@ -157,29 +157,94 @@ class _MapSearchState extends State<MapSearch> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Obx(() {
+                                //   return (isNext.value)
+                                //       ? IconButton(
+                                //           //TODO
+                                //           constraints: BoxConstraints.tightFor(
+                                //               height: 10),
+                                //           padding: EdgeInsets.zero,
+                                //           onPressed: () {
+                                //             isNext.value = false;
+                                //             dragControl.animateTo(0.30,
+                                //                 duration:
+                                //                     Duration(milliseconds: 500),
+                                //                 curve: Curves.linear);
+                                //           },
+                                //           icon: Padding(
+                                //             padding: const EdgeInsets.only(
+                                //                 top: 16.0),
+                                //             child: Icon(
+                                //                 Icons.arrow_downward_rounded),
+                                //           ))
+                                //       : const SizedBox();
+                                // }),
+                              ],
+                            ),
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Add Trip",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Obx(() {
+                                    return (isNext.value)
+                                        ? IconButton(
+                                            onPressed: () {
+                                              isNext.value = false;
+                                              dragControl.animateTo(0.30,
+                                                  duration: Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.linear);
+                                            },
+                                            icon: Icon(
+                                                Icons.arrow_downward_rounded))
+                                        : const SizedBox();
+                                  }),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 //TODO: center the text and close button to the right
-                                Text(
-                                  "Add Trip",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Obx(() {
-                                  return (isNext.value)
-                                      ? IconButton(
-                                          onPressed: () {
-                                            isNext.value = false;
-                                            dragControl.animateTo(0.30,
-                                                duration:
-                                                    Duration(milliseconds: 500),
-                                                curve: Curves.linear);
-                                          },
-                                          icon: Icon(Icons.close))
-                                      : const SizedBox();
-                                })
+                                // Spacer(flex: 1),
+
+                                // Text(
+                                //   "Add Trip",
+                                //   style: TextStyle(
+                                //       color: Colors.white,
+                                //       fontSize: 24,
+                                //       fontWeight: FontWeight.bold),
+                                // ),
+                                // Spacer(flex: 1),
+                                // Obx(() {
+                                //   return (isNext.value)
+                                //       ? IconButton(
+                                //           onPressed: () {
+                                //             isNext.value = false;
+                                //             dragControl.animateTo(0.30,
+                                //                 duration:
+                                //                     Duration(milliseconds: 500),
+                                //                 curve: Curves.linear);
+                                //           },
+                                //           icon: Icon(
+                                //               Icons.arrow_downward_rounded))
+                                //       : const SizedBox();
+                                // })
                               ],
                             ),
                             const SizedBox(

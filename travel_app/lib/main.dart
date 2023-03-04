@@ -12,7 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await Geolocator.checkPermission();
+  //await Geolocator.checkPermission();
   await GetStorage.init();
   runApp(const MyApp());
 }
