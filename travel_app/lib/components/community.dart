@@ -19,6 +19,21 @@ class Community extends StatefulWidget {
 }
 
 class _CommunityState extends State<Community> {
+  RxBool isLoading = false.obs;
+
+  late List list;
+  @override
+  void initState() {
+    super.initState();
+    isLoading.value = true;
+    Api().getCommunitites("malay@spit.ac.in").then((value) {
+      // print(value);
+      Map data = Map.from(value);
+      list = data['Communities'];
+      isLoading.value = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,43 +43,6 @@ class _CommunityState extends State<Community> {
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => CreateCommunity()));
-          // showGeneralDialog(
-          //     context: context,
-          //     pageBuilder: (context, anim1, anim2) {
-          //       return Material(
-          //         color: Colors.transparent,
-          //         child: Padding(
-          //           padding: const EdgeInsets.symmetric(
-          //               vertical: 64.0, horizontal: 32.0),
-          //           child: Container(
-          //             decoration: BoxDecoration(
-          //                 color: MStyles.pColor.withOpacity(0.8),
-          //                 borderRadius: BorderRadius.circular(16)),
-          //             child: Padding(
-          //               padding: const EdgeInsets.all(8.0),
-          //               child: Column(
-          //                 children: [
-          //                   Stack(
-          //                     children: [
-          //                       Align(
-          //                         alignment: Alignment.center,
-          //                         child: Text(
-          //                           "Create",
-          //                           style: TextStyle(
-          //                               fontSize: 18,
-          //                               color: Colors.white,
-          //                               fontWeight: FontWeight.bold),
-          //                         ),
-          //                       )
-          //                     ],
-          //                   )
-          //                 ],
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     });
         },
         backgroundColor: MStyles.lightBgColor,
         child: Icon(
@@ -147,19 +125,31 @@ class _CommunityState extends State<Community> {
                 )
               ],
             ),
-            Expanded(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 3, //
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: CommunityTile(
-                        title: "events",
+            Obx(() {
+              return (!isLoading.value)
+                  ? Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: list.length, //
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: CommunityTile(
+                                title: list[index]['title'],
+                                desc: list[index]['desc'],
+                                date: list[index]['date'],
+                                imageUrl: list[index]['imageUrl'],
+                              ),
+                            );
+                          }),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 32.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
                       ),
                     );
-                  }),
-            )
+            })
           ],
         ),
       ),
@@ -171,8 +161,14 @@ class CommunityTile extends StatelessWidget {
   const CommunityTile({
     super.key,
     required this.title,
+    required this.desc,
+    required this.date,
+    this.imageUrl,
   });
   final String title;
+  final String desc;
+  final String date;
+  final String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -181,8 +177,13 @@ class CommunityTile extends StatelessWidget {
           child: ClipRRect(
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-            child: Image.network(
-                "https://images.unsplash.com/photo-1677856216846-596a3d6d869e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=1400&q=60"),
+            child: (imageUrl == null)
+                ? Image.network(
+                    "https://images.unsplash.com/photo-1677856216846-596a3d6d869e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=1400&q=60")
+                : Builder(builder: (context) {
+                    var bytes = base64Decode(imageUrl!);
+                    return Image.memory(bytes);
+                  }),
           ),
         ),
         Container(
@@ -193,12 +194,13 @@ class CommunityTile extends StatelessWidget {
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16))),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       title,
@@ -208,12 +210,40 @@ class CommunityTile extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     InkWell(
-                      // child: Co,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFF64F761)),
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(32)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 2.0),
+                          child: Text(
+                            "join",
+                            style: TextStyle(
+                              color: Color(0xFF64F761),
+                            ),
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 ),
-                Text("Event Description"),
-                Text("Event Date"),
+                Row(
+                  children: [
+                    Text(desc,
+                        style: TextStyle(
+                            color:
+                                MStyles.pColorWithTransparency.withOpacity(0.4),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14)),
+                  ],
+                ),
+                Text(DateTime.parse(date).day.toString() +
+                    "/" +
+                    DateTime.parse(date).month.toString() +
+                    "/" +
+                    DateTime.parse(date).year.toString()),
                 Text("Event Time"),
                 Text("Event Location"),
               ],
@@ -407,7 +437,7 @@ class _CreateCommunityState extends State<CreateCommunity> {
                             "email": email.text,
                             "imageUrl": img64,
                           };
-                          // print(payload);
+                          print(payload);
                           Map res = await Api().createCommunity(payload);
                           if (res['status'] == 1) {
                             print("successful");
