@@ -18,55 +18,13 @@ class LoginScreenV3 extends StatelessWidget {
             child: Stack(
           alignment: Alignment.center,
           children: [
-            Column(
-              children: [
-                Flexible(
-                  child: Material(
-                    elevation: 0,
-                    clipBehavior: Clip.antiAlias,
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(200.h),
-                          topLeft: Radius.circular(200.h)),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xff2e92da),
-                          border: Border(bottom: BorderSide())),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Flexible(
-                  child: Material(
-                    elevation: 0,
-                    clipBehavior: Clip.antiAlias,
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(225.h),
-                          topLeft: Radius.circular(225.h)),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xff121827),
-                          border: Border(bottom: BorderSide())),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+
+
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    "assets/images/tr.png",
-                    height: 175.w,
-                  ),
                   SizedBox(height: 16.w),
                   TextField(
                     controller: loginController.email,
@@ -94,17 +52,7 @@ class LoginScreenV3 extends StatelessWidget {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 0.w, vertical: 30.w),
-                    child: ElevatedButton(
-                        onPressed: () => loginController.login(),
-                        child: Text("LOGIN",
-                            style: TextStyle(
-                                fontSize: 18.w, fontWeight: FontWeight.w700)),
-                        clipBehavior: Clip.antiAlias,
-                        style: ElevatedButton.styleFrom(
-                            minimumSize: Size.fromHeight(50),
-                            shape: BeveledRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.w))))),
+                    child: ElevatedButton(onPressed: () => loginController.login(), child: Text("LOGIN"),),
                   ),
                   SizedBox(
                     height: 100.h,

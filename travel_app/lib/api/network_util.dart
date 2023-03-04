@@ -44,7 +44,7 @@ class NetworkUtil {
       return HashMap.from({
         "status": "0",
         "message":
-            "Error occurred.\nPlease close the app, remove it from recent tabs and try again.\nIf issue persists, call +91 897 580 3664"
+            "Error Occurred"
       });
     }
   }

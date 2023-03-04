@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:travel_app/api/api.dart';
+import 'package:travel_app/utils/MLocalStorage.dart';
+import 'package:travel_app/utils/generic_util.dart';
 
 class LoginController extends GetxController {
   // final email = "".obs;
@@ -22,7 +24,14 @@ class LoginController extends GetxController {
   login() async {
     toggleLoginLoading();
     await setBaseUrl();
+    final Map res = await Api().login(email.text, password.text);
+    if (!res.containsKey('token')){
+      GenericUtil.snackGeneric("Failed", "Login Failed");
 
+    }else {
+      GenericUtil.snackSuccess();
+      MLocalStorage().writeToken(res["token"]);
+    }
     toggleLoginLoading();
   }
   void toggleLoginLoading() {

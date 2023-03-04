@@ -19,13 +19,11 @@ class Api {
   static final GET_HINT = BASE_URL + "/game" + "/get_hint";
   var formData;
 
-  Future<dynamic> login(
-      String teamId, String password, double curr_lat, double curr_lng) {
+  Future<dynamic> login(String email, String password) {
+//no do it their side
     formData = FormData.fromMap({
-      "tid": teamId,
-      "password": password,
-      "curr_lat": curr_lat,
-      "curr_lng": curr_lng
+      "email": email,
+      "password": password
     });
 
     return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
@@ -34,31 +32,6 @@ class Api {
     });
   }
 
-  // Future<dynamic> getClueFromCid(String cid) {
-  Future<dynamic> getClueFromCid(String cid) {
-    // randomly assign a route number. send route number too
-    formData = FormData.fromMap({"cid": cid}); // directly set cid
-    return _netUtil.postf(GET_CLUE_FROM_CID, formData).then((dynamic res) {
-      print(res.toString());
-      return res;
-    });
-  }
-
-  Future<dynamic> getNextClue(int updatedBal, int newClueNo,
-      int milisSinceEpochOfPrevClueSolveTimestamp) {
-    formData = FormData.fromMap({
-      "tid": "025",
-      //this is entailed in bearer token
-      "balance": updatedBal,
-      "clue_no": newClueNo,
-      "prev_clue_solved_timestamp": milisSinceEpochOfPrevClueSolveTimestamp
-    });
-
-    return _netUtil.postf(GET_NEXT_CLUE_URL, formData).then((dynamic res) {
-      print(res.toString());
-      return res;
-    });
-  }
 
   Future<dynamic> logout({logout_loc_lat = "-999", logout_loc_lng = "-999"}) {
     return _netUtil
@@ -73,24 +46,6 @@ class Api {
       final box = GetStorage();
       box.erase();
       final tet = box.read("markers_stored");
-      return res;
-    });
-  }
-
-  Future<dynamic> changeStateToPlaying() {
-    return _netUtil
-        .postf(CHANGE_STATE_URL, FormData.fromMap({"new_state": "Playing"}))
-        .then((dynamic res) {
-      print(res.toString());
-      final box = GetStorage();
-      box.erase();
-      return res;
-    });
-  }
-
-  Future<dynamic> getHint(String cid, int updateBalance) {
-    formData = FormData.fromMap({"cid": cid, "updated_balance": updateBalance});
-    return _netUtil.postf(GET_HINT, formData).then((dynamic res) {
       return res;
     });
   }
