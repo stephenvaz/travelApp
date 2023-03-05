@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:travel_app/api/api.dart';
+import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/views/sign_up.dart';
 
@@ -22,7 +23,7 @@ class _SimilarTripState extends State<SimilarTrip> {
   void initState() {
     super.initState();
     _isLoading.value = true;
-    Api().getNearby("par76@gmail.com").then((value) {
+    Api().getNearby(MLocalStorage().getEmailId()).then((value) {
       print(value);
       Map nb = value;
       _nearby = nb["arr"];
@@ -157,7 +158,7 @@ class _BottomSheetState extends State<BottomSheet> {
   void initState() {
     super.initState();
     _isLoadingPend.value = true;
-    Api().pending("vedantpanchal12345@gmail.com").then((value) {
+    Api().pending(MLocalStorage().getEmailId()).then((value) {
       Map data = value;
       pend = data['list'];
       _isLoadingPend.value = false;
@@ -188,13 +189,11 @@ class _BottomSheetState extends State<BottomSheet> {
                   _isPending.value = !_isPending.value;
                   if (_isPending.value) {
                     _isLoadingPend.value = true;
-                    Api()
-                        .pending("vedantpanchal12345@gmail.com")
-                        .then((value) {
-                          Map data = value;
-                          pend = data['list'];
-                          _isLoadingPend.value = false;
-                        });
+                    Api().pending(MLocalStorage().getEmailId()).then((value) {
+                      Map data = value;
+                      pend = data['list'];
+                      _isLoadingPend.value = false;
+                    });
                   }
                 },
                 child: Obx(() {
@@ -225,7 +224,7 @@ class _BottomSheetState extends State<BottomSheet> {
                   _isPending.value = !_isPending.value;
                   if (!_isPending.value) {
                     _isLoadingRecvd.value = true;
-                    Api().recvreq("vedantpanchal12345@gmail.com").then((value) {
+                    Api().recvreq(MLocalStorage().getEmailId()).then((value) {
                       Map data = value;
                       recvd = data['list'];
                       _isLoadingRecvd.value = false;
@@ -287,6 +286,7 @@ class _BottomSheetState extends State<BottomSheet> {
                         itemBuilder: (context, index) {
                           return ReqTile(
                             email: pend[index]["email"],
+                            ar: false,
                           );
                         }),
                   )
@@ -299,8 +299,9 @@ class _BottomSheetState extends State<BottomSheet> {
 }
 
 class ReqTile extends StatefulWidget {
-  const ReqTile({super.key, required this.email});
+  const ReqTile({super.key, required this.email, this.ar});
   final String email;
+  final bool? ar;
 
   @override
   State<ReqTile> createState() => _ReqTileState();
@@ -339,102 +340,109 @@ class _ReqTileState extends State<ReqTile> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.email,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.6,
+                  ),
+                  child: Text(
+                    widget.email,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        Map res = await Api().accept(
-                            widget.email, 'vedantpanchal12345@gmail.com');
-                        if (res["status"] == 1) {
-                          Get.closeAllSnackbars();
-                          Get.snackbar(
-                            "Success",
-                            "Request Sent",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white,
-                          );
-                        } else {
-                          Get.closeAllSnackbars();
-                          Get.snackbar(
-                            "Error",
-                            "Something went wrong",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                          );
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xFF64F761)),
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(32)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 2.0),
-                          child: Text(
-                            "Accept",
-                            style: TextStyle(
-                              color: Color(0xFF64F761),
+                (widget.ar != false)
+                    ? Row(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              Map res = await Api().accept(
+                                  widget.email, MLocalStorage().getEmailId());
+                              if (res["status"] == 1) {
+                                Get.closeAllSnackbars();
+                                Get.snackbar(
+                                  "Success",
+                                  "Request Sent",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
+                                );
+                              } else {
+                                Get.closeAllSnackbars();
+                                Get.snackbar(
+                                  "Error",
+                                  "Something went wrong",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xFF64F761)),
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(32)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 2.0),
+                                child: Text(
+                                  "Accept",
+                                  style: TextStyle(
+                                    color: Color(0xFF64F761),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        Map res = await Api().reject(
-                            widget.email, 'vedantpanchal12345@gmail.com');
-                        if (res["status"] == 1) {
-                          Get.closeAllSnackbars();
-                          Get.snackbar(
-                            "Success",
-                            "Request Sent",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white,
-                          );
-                        } else {
-                          Get.closeAllSnackbars();
-                          Get.snackbar(
-                            "Error",
-                            "Something went wrong",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                          );
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.red),
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(32)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 2.0),
-                          child: Text(
-                            "Reject",
-                            style: TextStyle(
-                              color: Colors.red,
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              Map res = await Api().reject(
+                                  widget.email, MLocalStorage().getEmailId());
+                              if (res["status"] == 1) {
+                                Get.closeAllSnackbars();
+                                Get.snackbar(
+                                  "Success",
+                                  "Request Sent",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
+                                );
+                              } else {
+                                Get.closeAllSnackbars();
+                                Get.snackbar(
+                                  "Error",
+                                  "Something went wrong",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.red),
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(32)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 2.0),
+                                child: Text(
+                                  "Reject",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             )
           ],
@@ -545,8 +553,8 @@ class _RequestTileState extends State<RequestTile> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        Map res =
-                            await Api().send(widget.email, 'par76@gmail.com');
+                        Map res = await Api()
+                            .send(widget.email, MLocalStorage().getEmailId());
                         if (res["status"] == 1) {
                           Get.closeAllSnackbars();
                           Get.snackbar(

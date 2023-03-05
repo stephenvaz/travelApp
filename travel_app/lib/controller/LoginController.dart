@@ -25,15 +25,22 @@ class LoginController extends GetxController {
     toggleLoginLoading();
     await setBaseUrl();
     final Map res = await Api().login(email.text, password.text);
-    if (!res.containsKey('token')){
-      GenericUtil.snackGeneric("Failed", "Login Failed");
-
-    }else {
-      GenericUtil.snackSuccess();
-      MLocalStorage().writeToken(res["token"]);
-    }
+    // final Map res = {'token': '123s'};
+    // if (!res.containsKey('token')) {
+    //   GenericUtil.snackGeneric("Failed", "Login Failed");
+    // } else {
+      if(res["status"] == 1)
+      {GenericUtil.snackSuccess();
+      // MLocalStorage().writeToken(res["token"]);
+      MLocalStorage().setEmailId(email.text);
+      print(MLocalStorage().getEmailId());}
+      else {
+        GenericUtil.snackGeneric("Failed", "Login Failed");
+      }
+    // }
     toggleLoginLoading();
   }
+
   void toggleLoginLoading() {
     isLoginLoading.value = !isLoginLoading.value;
   }
@@ -42,12 +49,12 @@ class LoginController extends GetxController {
     // DatabaseReference ref = FirebaseDatabase.instance.ref("base_url");
     // final player1ref = await ref.once();
     // MLocalStorage().setBaseUrl(player1ref.snapshot.value as String);
-    final data = await FirebaseFirestore.instance.collection('travel_app').doc('global_data').get();
+    final data = await FirebaseFirestore.instance
+        .collection('travel_app')
+        .doc('global_data')
+        .get();
     Api.BASE_URL = data['base_url'];
     Api.BASE_URL = data['base_url'];
     // GeoPoint test = GeoPoint(123, 324);
-
   }
-
-
 }

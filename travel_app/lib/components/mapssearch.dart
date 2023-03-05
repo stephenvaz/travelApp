@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 //api
 import 'package:travel_app/api/api.dart';
+import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 
 class MapSearch extends StatefulWidget {
@@ -519,7 +520,7 @@ class _MapSearchState extends State<MapSearch> {
                                                           transport,
                                                       "interests": selectedChip,
                                                       "status": status,
-                                                      "email": "par76@gmail.com"
+                                                      "email": MLocalStorage().getEmailId()
                                                     };
                                                     Map res = await Api()
                                                         .addTrip(payload);

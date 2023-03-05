@@ -53,9 +53,10 @@ class MyApp extends StatelessWidget {
           // home: const LoginScreen(),
           // home: LoginScreenV3(),
           // home: LoginScreenV3(),
-          // home: MapSearch(),
+          home: SimilarTrip(),
           // home: SignUpV2(),
-          home: MessagingScreen(),
+          // home: MessagingScreen(),
+          // home: MapSearch(),
         );
       },
     );
