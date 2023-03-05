@@ -21,11 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 // const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const communityRoutes = require("./routes/communityRoutes");
 //routes
 app.use('/', userRoutes);
 app.use('/', authRoutes);
 app.use('/', profile);
 app.use('/', friend);
+app.use("/", communityRoutes);
 
 app.listen(3000, () => {
     console.log("Listening on port 3000");
