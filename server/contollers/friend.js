@@ -44,17 +44,16 @@ module.exports.get_friends = async (req, res) => {
 
 }
 module.exports.send_friend_req = async (req, res) => {
+    console.log(req.body);
     try {
-        const data = req.body.data
-        const toEmail = data.to
-        const fromEmail = data.from
-
-        const fromUserRef = await db.collection("Users").doc(fromEmail);
+        console.log(req.body);
+        const {to, from} = req.body;
+        const fromUserRef = await db.collection("Users").doc(from);
         const fromUserData = await fromUserRef.get()
         const fromUserDataObj = fromUserData.data()
 
         const fromFriends = {
-            email: toEmail,
+            email: to,
             rating: -999,
             review: "",
             status: "pending"
@@ -68,14 +67,14 @@ module.exports.send_friend_req = async (req, res) => {
         else {
             const fromUserData = await fromUserRef.update({ friends: [...fromUserDataObj.friends, fromFriends] })
         }
+ 
 
-
-        const toUserRef = db.collection("Users").doc(toEmail);
+        const toUserRef = db.collection("Users").doc(to);
         const toUserData = await toUserRef.get()
         const toUserDataObj = toUserData.data()
 
         const toFriends = {
-            email: fromEmail,
+            email: from,
             rating: -999,
             review: "",
             status: "received"
@@ -89,8 +88,10 @@ module.exports.send_friend_req = async (req, res) => {
         else {
             const toUserData = await toUserRef.update({ friends: [...toUserDataObj.friends, toFriends] })
         }
-
-        res.send("Updated")
+        res.json({
+            "status": 1,
+            "message": "Added Successfully"
+        });
 
     }
     catch (e) {
@@ -103,25 +104,66 @@ module.exports.send_friend_req = async (req, res) => {
     }
 }
 
+module.exports.send_received_list = async (req, res) => {
+    //console.log(req.body)
+    try {
+        const userRef = await db.collection("Users").doc(req.body.email);
+        const userData = await (await userRef.get()).data()
+        const userFriends = []
+        userData.friends.forEach((item) => {
+            if (item.status == "received") {
+                    userFriends.push(item)
+                }
+            })
+        res.json({"list": userFriends});
+    } catch (error) {
+        res.json({
+            status: 0,
+            message: "Error occurred.",
+            error: `${e}`,
+        });
+    }
+}
+
+module.exports.send_pending_list = async (req, res) => {
+    //console.log(req.body)
+    try {
+        const userRef = await db.collection("Users").doc(req.body.email);
+        const userData = await (await userRef.get()).data()
+        const userFriends = []
+        userData.friends.forEach((item) => {
+            if (item.status == "pending") {
+                    userFriends.push(item)
+                }
+            })
+        res.json({"list": userFriends});
+    } catch (error) {
+        res.json({
+            status: 0,
+            message: "Error occurred.",
+            error: `${e}`,
+        });
+    }
+}
+
 module.exports.accept_friend_req = async (req, res) => {
     try {
-        const data = req.body.data
-        const userRef = await db.collection("Users").doc(data.user);
+        const {user, target} = req.body;
+        const userRef = await db.collection("Users").doc(user);
         const userData = await (await userRef.get()).data()
 
-        const targetRef = await db.collection("Users").doc(data.target);
+        const targetRef = await db.collection("Users").doc(target);
         const targetData = await (await targetRef.get()).data()
 
         const userFriends = []
         userData.friends.forEach((item) => {
-            if (item.email == data.target) {
+            if (item.email == target) {
                 userFriends.push({
                     ...item,
                     status: "accepted"
                 })
             }
             else {
-
                 userFriends.push(item)
             }
         })
@@ -131,7 +173,7 @@ module.exports.accept_friend_req = async (req, res) => {
 
         const targetFriends = []
         targetData.friends.forEach((item) => {
-            if (item.email == data.user) {
+            if (item.email == user) {
                 targetFriends.push({
                     ...item,
                     status: "accepted"
@@ -144,7 +186,9 @@ module.exports.accept_friend_req = async (req, res) => {
         })
 
         const targetDataObj = targetRef.update({ friends: targetFriends })
-        res.send("updated")
+        res.json({
+            "status": 1
+        })
     }
     catch (e) {
         console.log(e)
@@ -157,23 +201,21 @@ module.exports.accept_friend_req = async (req, res) => {
 
 }
 module.exports.remove_friend = async (req, res) => {
+    //console.log(req.body);
     try {
-        
-        const data = req.body.data
-
-        const userRef = await db.collection("Users").doc(data.user);
+        const {user, target} = req.body;
+        const userRef = await db.collection("Users").doc(user);
         const userData = await (await userRef.get()).data()
 
-        const targetRef = await db.collection("Users").doc(data.target);
+        const targetRef = await db.collection("Users").doc(target);
         const targetData = await (await targetRef.get()).data()
 
         const userFriends = []
         userData.friends.forEach((item) => {
-            if (item.email == data.target) {
-                return
+            if (item.email == target) {
+                return 
             }
             else {
-
                 userFriends.push(item)
             }
         })
@@ -183,18 +225,16 @@ module.exports.remove_friend = async (req, res) => {
 
         const targetFriends = []
         targetData.friends.forEach((item) => {
-            if (item.email == data.user) {
+            if (item.email == user) {
                 return
             }
             else {
-
                 targetFriends.push(item)
             }
         })
 
         const targetDataObj = targetRef.update({ friends: targetFriends })
-        res.send("updated")
-
+        res.json({"status": 1})
     }
     catch (e) {
         console.log(e)

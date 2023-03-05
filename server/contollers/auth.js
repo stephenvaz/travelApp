@@ -54,6 +54,11 @@ module.exports.verify_mail = (req, res) => {
         const email = req.params.email
         const userRef = db.collection("Users").doc(email)
         const userData = userRef.update({ verified_mail: true })
+        res.json({
+            status: "1",
+            message: "Succes.",
+            error: `${e}`,
+        });
     }
     catch (e) {
         console.log(e);
@@ -137,43 +142,48 @@ module.exports.verify_phone = (req, res) => {
 
 module.exports.login = async (req, res) => {
     // const { email } = req.body;
-    // console.log(req.body);
+    console.log(req.body);
     try{
     const {email} = req.body;
     const salts = 10;
     const user = await db.collection("Users").doc(email).get();
     if (!user.exists) {
         return res.json({
-            status: "0",
+            status: 0,
             message: "bggf Error occurred."
         })
     }
-    bcrypt.compare(req.body.password, user.data().password).then((result) => {
-            if(result){
-                const token = jwt.sign({email: email}, process.env.password, {
-                    expiresIn: "1111h"
-                });    
-                res.json({
-                    status: "1",
+
+    // bcrypt.compare(req.body.password, user.data().password).then((result) => {
+            // if(result){
+            //     const token = jwt.sign({email: email}, process.env.password, {
+            //         expiresIn: "1111h"
+            //     });   
+            if(req.body.password === user.data().password){ 
+                return res.json({
+                    status: 1,
                     message: "LoggedIn Successfully",
-                    token: token
+                    // token: token
                 });
             }else {
-                res.json({
+                return res.json({
                     status: "0",
                     message: "Passwords do not match"
                 });
             }
-        })
+        
     }catch(e){
-        res.send(e);
+        res.json({
+            "status": 0,
+            "message": `${e}`
+        }); 
     }
 }
 
 module.exports.create_account = (req, res) => {
 
     const data = req.body
-    // console.log(data)
+    console.log(data)
     let email = data.email
     let phone = data.phone_number
 
@@ -181,13 +191,13 @@ module.exports.create_account = (req, res) => {
         const userRef = db.collection("Users").doc(email)
         const userDataObj = userRef.set(data)
 
-        const randId = uuidv4();
-        const verify_mail_link = `http://localhost:3000/verify_mail/${email}/${randId}`
-        sendEmail(email, "Verify your Mail", `${verify_mail_link}`)
+        // const randId = uuidv4();
+        //const verify_mail_link = `https://eff7-2409-40c0-c-5392-1cd4-d7f6-7a73-826.in.ngrok.io/verify_mail/${email}/${randId}`
+        //sendEmail(email, "Verify your Mail", `${verify_mail_link}`)
 
         // const randId2 = uuidv4();
-        // const verify_phone_link = `https://07a4-2409-40c0-1028-2ab6-bd10-fc8b-ac21-bd58.in.ngrok.io/verify_phone/${email}/${randId2}`
-        // sendMessage(verify_phone_link, phone)
+        //const verify_phone_link = `https://eff7-2409-40c0-c-5392-1cd4-d7f6-7a73-826.in.ngrok.io/verify_phone/${email}/${randId2}`
+        //sendMessage(verify_phone_link, phone)
 
         res.json({
             status: 1,

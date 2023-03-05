@@ -6,7 +6,10 @@ const {isAuth} = require("../middleware");
 router.post("/add-trip", user.addTrip);
  
 //get all trips
-router.get("/get-nearby", user.getTrips);
+router.post('/get-trips', user.getTripDetails);
 
+router.post("/get-nearby", user.getTrips);
+
+router.post("/get-images", user.tripImages);
 
 module.exports = router;
