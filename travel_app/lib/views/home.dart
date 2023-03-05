@@ -8,13 +8,12 @@ import 'package:travel_app/components/similar.dart';
 import 'package:travel_app/controller/HomeController.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/views/recent_chats_screen.dart';
-import 'package:travel_app/views/sign_upv2.dart';
 
 final homeController = HomeController();
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
-
+  final String random = "SLKJFAGN";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,7 +53,8 @@ class Home extends StatelessWidget {
                   Image.asset('assets/images/home_banner.png'),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    margin: EdgeInsets.only(top: ScreenUtil().screenHeight * 0.3),
+                    margin:
+                        EdgeInsets.only(top: ScreenUtil().screenHeight * 0.3),
                     width: double.maxFinite,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -62,160 +62,200 @@ class Home extends StatelessWidget {
                             topRight: Radius.circular(20.w)),
                         color: MStyles.pColor),
                     child: ConstrainedBox(
-                      constraints:
-                      BoxConstraints(maxWidth: ScreenUtil().screenWidth - 64),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "Events",
-                                    style: MStyles.primaryTextStyle
-                                        .copyWith(color: Colors.white),
-                                  ),
-                                  ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                          maxWidth:
-                                          ScreenUtil().screenWidth * 0.5),
-                                      child: Text(
-                                        "Meet new people at events at your travel locations!",
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.white),
-                                      ))
-                                ],
-                              ),
-                              Spacer(),
-                              OutlinedButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "View More",
-                                    style: GoogleFonts.poppins(
-                                      // color: MStyles.col4
-                                        color: Colors.white),
-                                  ),
-                                  style: OutlinedButton.styleFrom(
-                                    // foregroundColor:                          MStyles.col4
-                                      side: BorderSide(
-                                        // color: MStyles.col4,
-                                          color: Colors.white,
-                                          width: 2),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(100)))))
-                            ],
-                          ),
-                          Container(
-                            height: 100,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: 6,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    color: Colors.orange,
-                                    width: 100,
-                                    height: 80,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "Hangouts",
-                                    style: MStyles.primaryTextStyle
-                                        .copyWith(color: Colors.white),
-                                  ),
-                                  ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                          maxWidth:
-                                          ScreenUtil().screenWidth * 0.5),
-                                      child: Text(
-                                        "Plan one to one catch-ups for the places you want to visit together",
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.white),
-                                      ))
-                                ],
-                              ),
-                              Spacer(),
-                              OutlinedButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "View More",
-                                    style: GoogleFonts.poppins(
-                                      // color: MStyles.col4
-                                        color: Colors.white),
-                                  ),
-                                  style: OutlinedButton.styleFrom(
-                                    // foregroundColor:                          MStyles.col4
-                                      side: BorderSide(
-                                        // color: MStyles.col4,
-                                          color: Colors.white,
-                                          width: 2),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(100)))))
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
+                      constraints: BoxConstraints(
+                          maxWidth: ScreenUtil().screenWidth - 64),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    //user images here
-
-                                    Container(
-                                      color: Colors.orange,
-                                      width: 100,
-                                      height: 80,
+                                    Text(
+                                      "Events",
+                                      style: MStyles.primaryTextStyle
+                                          .copyWith(color: Colors.white),
                                     ),
-                                    SizedBox(
-                                      width: 16,
-                                    ),
-                                    Container(
-                                      color: Colors.orange,
-                                      width: 100,
-                                      height: 80,
-                                    ),
-                                    Container(
-                                      color: Colors.orange,
-                                      width: 100,
-                                      height: 80,
-                                    ),
-                                    Container(
-                                      color: Colors.orange,
-                                      width: 100,
-                                      height: 80,
-                                    )
+                                    ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                            maxWidth:
+                                                ScreenUtil().screenWidth * 0.5),
+                                        child: Text(
+                                          "Meet new people at events at your travel locations!",
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.white),
+                                        ))
                                   ],
                                 ),
-                              )
-                            ],
-                          )
-                        ],
+                                Spacer(),
+                                OutlinedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "View More",
+                                      style: GoogleFonts.poppins(
+                                          // color: MStyles.col4
+                                          color: Colors.white),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                        // foregroundColor:                          MStyles.col4
+                                        side: BorderSide(
+                                            // color: MStyles.col4,
+                                            color: Colors.white,
+                                            width: 2),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)))))
+                              ],
+                            ),
+                            Container(
+                              height: 350,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                // shrinkWrap: true,
+                                itemCount: 4,
+                                itemBuilder: (context, index) {
+                                  // return Padding(
+                                  //   padding: const EdgeInsets.all(8.0),
+                                  //   child: Container(
+                                  //     color: Colors.orange,
+                                  //     width: 100,
+                                  //     height: 80,
+                                  //   ),
+                                  // );
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 300,
+                                      child: CommunityTile(
+                                        title: "Event 1",
+                                        desc: "Description",
+                                        date: "2023-12-12",
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Hangouts",
+                                      style: MStyles.primaryTextStyle
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                    ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                            maxWidth:
+                                                ScreenUtil().screenWidth * 0.5),
+                                        child: Text(
+                                          "Plan one to one catch-ups for the places you want to visit together",
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.white),
+                                        ))
+                                  ],
+                                ),
+                                Spacer(),
+                                OutlinedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "View More",
+                                      style: GoogleFonts.poppins(
+                                          // color: MStyles.col4
+                                          color: Colors.white),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                        // foregroundColor:                          MStyles.col4
+                                        side: BorderSide(
+                                            // color: MStyles.col4,
+                                            color: Colors.white,
+                                            width: 2),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)))))
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      //user images here
+
+                                      // Container(
+                                      //   color: Colors.orange,
+                                      //   width: 100,
+                                      //   height: 80,
+                                      // ),
+                                      // SizedBox(
+                                      //   width: 16,
+                                      // ),
+                                      // Container(
+                                      //   color: Colors.orange,
+                                      //   width: 100,
+                                      //   height: 80,
+                                      // ),
+                                      // Container(
+                                      //   color: Colors.orange,
+                                      //   width: 100,
+                                      //   height: 80,
+                                      // ),
+                                      // Container(
+                                      //   color: Colors.orange,
+                                      //   width: 100,
+                                      //   height: 80,
+                                      // )
+                                      SizedBox(
+                                        height: 80,
+                                        child: Expanded(
+                                          child: ListView.builder(
+                                            itemBuilder: (context, index) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    radius: 40,
+                                                    child: Text(
+                                                      random[index],
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              fontSize: 30),
+                                                    )),
+                                              );
+                                            },
+                                            itemCount: 6,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.horizontal,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  )                ],
+                  )
+                ],
               ),
               // MapSearch(),
               // MapSearch(),
@@ -244,26 +284,40 @@ class Home extends StatelessWidget {
             alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: CircleAvatar(backgroundColor: MStyles.pColor,
-
-                child: IconButton(icon: Icon(Icons.person),onPressed: (){
-                Get.to(() => Profile());
-              },),),
+              child: CircleAvatar(
+                backgroundColor: MStyles.pColor,
+                child: IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {
+                    Get.to(() => Profile());
+                  },
+                ),
+              ),
             ),
           ),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: CircleAvatar(backgroundColor: MStyles.pColor,
-
-                child: IconButton(icon: Icon(Icons.logout_rounded),onPressed: (){
-                  // Get.to(() => Profile());
-                  Get.to(() => SignUpV2());
-                },),),
+              child: InkWell(
+                onLongPress: () async {
+                  await FlutterPhoneDirectCaller.callNumber("+918693873153");
+                },
+                onDoubleTap: () async {
+                  await sendSMS(
+                      message:
+                          "Please send help. Current Location: 19.1075711868232, 72.83732439134089",
+                      recipients: ["+918693873153"]);
+                },
+                child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    child: Text(
+                      "SOS",
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    )),
+              ),
             ),
-          )
-
+          ),
         ],
       ),
     ));
