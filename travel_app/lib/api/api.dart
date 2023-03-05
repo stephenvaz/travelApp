@@ -43,6 +43,17 @@ class Api {
     });
   }
 
+   Future<dynamic> pending(String email) {
+//no do it their side
+    formData = FormData.fromMap({"email": email});
+    print(formData);
+
+    return _netUtil.post(PEND, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
     Future<dynamic> recvreq(String email) {
 //no do it their side
     formData = FormData.fromMap({"email": email});
