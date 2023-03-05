@@ -109,13 +109,7 @@ module.exports.SignUp = (req, res) => {
             token: token
         });
 
-        const randId = uuidv4();
-        const verify_mail_link = `http://localhost:3000/verify_mail/${email}/${randId}`
-        sendEmail(email, "Verify your Mail", `${verify_mail_link}`)
-
-        const randId2 = uuidv4();
-        const verify_phone_link = `https://07a4-2409-40c0-1028-2ab6-bd10-fc8b-ac21-bd58.in.ngrok.io/verify_phone/${email}/${randId2}`
-        sendMessage(verify_phone_link, phone)
+        
         // })
 
     } catch (e) {
@@ -163,11 +157,20 @@ module.exports.create_account = (req, res) => {
 
     const data = req.body
     // console.log(data)
-    let userEmail = data.email
+    let email = data.email
+    let phone = data.phone_number
 
     try {
-        const userRef = db.collection("Users").doc(userEmail)
+        const userRef = db.collection("Users").doc(email)
         const userDataObj = userRef.set(data)
+
+        const randId = uuidv4();
+        const verify_mail_link = `http://localhost:3000/verify_mail/${email}/${randId}`
+        sendEmail(email, "Verify your Mail", `${verify_mail_link}`)
+
+        // const randId2 = uuidv4();
+        // const verify_phone_link = `https://07a4-2409-40c0-1028-2ab6-bd10-fc8b-ac21-bd58.in.ngrok.io/verify_phone/${email}/${randId2}`
+        // sendMessage(verify_phone_link, phone)
 
         res.json({
             status: 1,
