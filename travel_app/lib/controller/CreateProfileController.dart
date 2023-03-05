@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:travel_app/api/api.dart';
 import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/utils/generic_util.dart';
+import 'package:travel_app/views/home.dart';
 import 'package:travel_app/views/sign_upv2.dart';
 
 class CreateProfileController extends GetxController {
@@ -42,7 +43,8 @@ class CreateProfileController extends GetxController {
 
       //todo add home route here
       // Get.off(() => SignUpV2());
-      Get.off(() => MapSearch());
+      // Get.off(() => MapSearch());
+      Get.off(() => Home());
     }
     toggleLoginLoading();
   }
@@ -59,8 +61,10 @@ class CreateProfileController extends GetxController {
         .collection('travel_app')
         .doc('global_data')
         .get();
-    Api.BASE_URL = data['base_url'];
-    Api.BASE_URL = data['base_url'];
+    // Api.BASE_URL = data['base_url'];
+    // Api.BASE_URL = data['base_url'];
+    // Api.BASE_URL = 'https://5c93-2409-40c0-18-d14f-b596-2ec5-91df-bd79.in.ngrok.io';
+    Api.BASE_URL = 'https://2d15-2409-40c0-1006-a7b-6187-d5bb-34c3-8d31.in.ngrok.io';
     // GeoPoint test = GeoPoint(123, 324);
   }
 }

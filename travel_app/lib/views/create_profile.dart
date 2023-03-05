@@ -266,11 +266,16 @@ class CreateProfile extends StatelessWidget {
           ),
           Align(
               alignment: Alignment.bottomCenter,
-              child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildElevatedButton("SUBMIT", () {
-                    createProfileController.createProfile();
-                  }))),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [Padding(
+                    padding: EdgeInsets.all(16),
+                    child: buildElevatedButton("SUBMIT", () {
+                      createProfileController.createProfile();
+                    })),
+
+                ],
+              )),
           Obx(() => !createProfileController.isLoginLoading.value
               ? SizedBox()
               : TweenAnimationBuilder(

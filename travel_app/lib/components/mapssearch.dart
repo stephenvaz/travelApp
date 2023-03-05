@@ -8,6 +8,7 @@ import 'package:google_maps_webservice/places.dart';
 
 //api
 import 'package:travel_app/api/api.dart';
+import 'package:travel_app/components/similar.dart';
 import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 
@@ -512,6 +513,7 @@ class _MapSearchState extends State<MapSearch> {
                                                     }
 
                                                     var payload = {
+                                                      "email": MLocalStorage().getEmailId(),
                                                       "start_date": startDate,
                                                       "end_date": endDate,
                                                       "stops": newstops,
@@ -533,6 +535,8 @@ class _MapSearchState extends State<MapSearch> {
                                                           "Trip Added",
                                                           backgroundColor:
                                                               MStyles.pColor);
+
+                                                      Get.to(() => SimilarTrip());
 
                                                       //TODO: NAVIGATE TO SOME OTHER SCREEN, MAYBE PROFILE OR JUST POP BACK
                                                     } else {

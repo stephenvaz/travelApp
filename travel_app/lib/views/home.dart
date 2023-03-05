@@ -8,6 +8,7 @@ import 'package:travel_app/components/similar.dart';
 import 'package:travel_app/controller/HomeController.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/views/recent_chats_screen.dart';
+import 'package:travel_app/views/sign_upv2.dart';
 
 final homeController = HomeController();
 
@@ -249,7 +250,20 @@ class Home extends StatelessWidget {
                 Get.to(() => Profile());
               },),),
             ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CircleAvatar(backgroundColor: MStyles.pColor,
+
+                child: IconButton(icon: Icon(Icons.logout_rounded),onPressed: (){
+                  // Get.to(() => Profile());
+                  Get.to(() => SignUpV2());
+                },),),
+            ),
           )
+
         ],
       ),
     ));

@@ -8,6 +8,7 @@ import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/utils/generic_util.dart';
 import 'package:travel_app/views/create_profile.dart';
+import 'package:travel_app/views/login_screen_v3.dart';
 
 class SignUpV2 extends StatelessWidget {
   SignUpV2({Key? key}) : super(key: key);
@@ -23,90 +24,103 @@ class SignUpV2 extends StatelessWidget {
         body: Stack(
           // alignment: Alignment.bottomCenter,
           children: [
-            Image.asset('assets/images/sign_up_banner.png'),
+            Transform.translate(
+              offset: Offset(0,-40),
+                child: Image.asset('assets/images/sign_up_banner.png')),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: ScreenUtil().screenHeight * 0.5 + 16,
+                // height: ScreenUtil().screenHeight * 0.5 + 16,
+                height: ScreenUtil().screenHeight * 0.55 + 16 + 5,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(32)),
                     color: Colors.white),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: EdgeInsets.only(left: 20, right: 20, top: 16),
+                child: Container(
+                  // height: ScreenUtil().screenHeight * 0.5 + 16,
+                  height: ScreenUtil().screenHeight,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
 
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "Create Account",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.w,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    MTextField(
-                      label: "Name",
-                      mcont: createAccController.name,
-                    ),
-                    MTextField(
-                      label: "Phone Number",
-                      mcont: createAccController.phone,
-                    ),
-                    MTextField(
-                      label: "Email",
-                      mcont: createAccController.email,
-                    ),
-                    // MTextField(label: "Password", mcont: createAccController.password,),
-                    Obx(
-                      () => TextField(
-                        obscureText: createAccController.isHidden.value,
-                        controller: createAccController.password,
-                        decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                              onTap: () {
-                                createAccController.toggleHidden();
-                              },
-                              child: Icon(createAccController.isHidden.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off)),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: MStyles.pColor),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          "Create Account",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.w,
                           ),
-                          label: Text("Password"),
-                          filled: true,
-                          fillColor: MStyles.pColor.withOpacity(0.25),
                         ),
                       ),
-                    ),
-                    Spacer(),
-                    // SizedBox(height: 16,),
-                    buildElevatedButton("CREATE", () async {
-                      createAccController.toggleLoginLoading();
-                      final res = await Api().createAccount(
-                          createAccController.name.text,
-                          createAccController.phone.text,
-                          createAccController.email.text,
-                          createAccController.password.text);
-                      if (res["status"] == 1) {
-                        GenericUtil.snackSuccess();
-                        MLocalStorage().setEmailId(createAccController.email.text);
-                        Get.off(() => CreateProfile());
+                      SizedBox(
+                        height: 8,
+                      ),
+                      MTextField(
+                        label: "Name",
+                        mcont: createAccController.name,
+                      ),
+                      MTextField(
+                        label: "Phone Number",
+                        mcont: createAccController.phone,
+                      ),
+                      MTextField(
+                        label: "Email",
+                        mcont: createAccController.email,
+                      ),
+                      // MTextField(label: "Password", mcont: createAccController.password,),
+                      Obx(
+                            () => TextField(
+                          obscureText: createAccController.isHidden.value,
+                          controller: createAccController.password,
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                                onTap: () {
+                                  createAccController.toggleHidden();
+                                },
+                                child: Icon(createAccController.isHidden.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: MStyles.pColor),
+                            ),
+                            label: Text("Password"),
+                            filled: true,
+                            fillColor: MStyles.pColor.withOpacity(0.25),
+                          ),
+                        ),
+                      ),
+                      // Spacer(),
+                      SizedBox(height: 16,),
+                      buildElevatedButton("CREATE", () async {
+                        createAccController.toggleLoginLoading();
+                        final res = await Api().createAccount(
+                            createAccController.name.text,
+                            createAccController.phone.text,
+                            createAccController.email.text,
+                            createAccController.password.text);
+                        if (res["status"] == 1) {
+                          GenericUtil.snackSuccess();
+                          MLocalStorage().setEmailId(createAccController.email.text);
+                          Get.off(() => CreateProfile());
 
-                      } else {
-                        GenericUtil.snackGeneric("Failed to create account", "Ensure all fields are filled properly");
-                      }
+                        } else {
+                          GenericUtil.snackGeneric("Failed to create account", "Ensure all fields are filled properly");
+                        }
 
-                      //test
-                      // Get.off(() => CreateProfile());
-                      createAccController.toggleLoginLoading();
-                    })
-                  ],
+                        //test
+                        // Get.off(() => CreateProfile());
+                        createAccController.toggleLoginLoading();
+                      }),
+                      TextButton(onPressed: () {
+                        Get.to(() => LoginScreenV3());
+                      }, child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Text("Already have an account? Login Instead", textAlign: TextAlign.center,)]))
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -46,6 +46,8 @@ class SignUpController extends GetxController {
     // final player1ref = await ref.once();
     // MLocalStorage().setBaseUrl(player1ref.snapshot.value as String);
     final data = await FirebaseFirestore.instance.collection('travel_app').doc('global_data').get();
+    // Api.BASE_URL = data['base_url'];
+    // Api.BASE_URL = data['base_url'];
     Api.BASE_URL = data['base_url'];
     Api.BASE_URL = data['base_url'];
     // GeoPoint test = GeoPoint(123, 324);

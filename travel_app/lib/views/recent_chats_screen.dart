@@ -17,7 +17,8 @@ class RecentChats extends StatelessWidget {
           body: Center(
             child: ListView.builder(
               shrinkWrap: true,
-              itemBuilder: (context, index) => Text("data"),
+              itemBuilder: (context, index) => Text(
+                  '${recentChatsContoller.chats.value[index]['name']} asdasd' ),
               itemCount: recentChatsContoller.chats.value.length,
             ),
           ),

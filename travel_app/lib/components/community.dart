@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/utils/generic_util.dart';
 //api
@@ -26,7 +27,8 @@ class _CommunityState extends State<Community> {
   void initState() {
     super.initState();
     isLoading.value = true;
-    Api().getCommunitites("malay@spit.ac.in").then((value) {
+    // Api().getCommunitites("malay@spit.ac.in").then((value) {
+    Api().getCommunitites(MLocalStorage().getEmailId()).then((value) {
       // print(value);
       Map data = Map.from(value);
       list = data['Communities'];

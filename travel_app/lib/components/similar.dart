@@ -26,7 +26,7 @@ class _SimilarTripState extends State<SimilarTrip> {
     Api().getNearby(MLocalStorage().getEmailId()).then((value) {
       print(value);
       Map nb = value;
-      _nearby = nb["arr"];
+      _nearby = nb["arr"] == "-999" ? [] : nb['arr'];
       _isLoading.value = false;
     });
   }
@@ -113,9 +113,9 @@ class _SimilarTripState extends State<SimilarTrip> {
           ),
           Expanded(
             child: Obx(() {
-              return (!_type.value)
+              return   (!_type.value)
                   ? (!_isLoading.value)
-                      ? ListView.builder(
+                      ? _nearby.isEmpty ? Text("No Nearby Trips Found", style: MStyles.primaryTextStyle,) : ListView.builder(
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {

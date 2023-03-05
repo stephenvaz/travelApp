@@ -53,8 +53,8 @@ class LoginController extends GetxController {
         .collection('travel_app')
         .doc('global_data')
         .get();
-    Api.BASE_URL = data['base_url'];
-    Api.BASE_URL = data['base_url'];
+    // Api.BASE_URL = data['base_url'];
+    Api.BASE_URL = 'https://2d15-2409-40c0-1006-a7b-6187-d5bb-34c3';
     // GeoPoint test = GeoPoint(123, 324);
   }
 }

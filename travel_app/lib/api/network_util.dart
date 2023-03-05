@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:travel_app/api/api.dart';
 
 class NetworkUtil {
   // next three lines makes this class a Singleton
@@ -42,6 +43,7 @@ class NetworkUtil {
       return _decoder.convert(response.toString());
     } catch (e) {
       print(e);
+      print(Api.BASE_URL);
       return HashMap.from({"status": "0", "message": "Errojhgygr Occurred"});
     }
   }
