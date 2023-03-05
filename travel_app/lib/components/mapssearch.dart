@@ -518,7 +518,8 @@ class _MapSearchState extends State<MapSearch> {
                                                       "mode_of_transport":
                                                           transport,
                                                       "interests": selectedChip,
-                                                      "status": status
+                                                      "status": status,
+                                                      "email": "par76@gmail.com"
                                                     };
                                                     Map res = await Api()
                                                         .addTrip(payload);

@@ -44,11 +44,11 @@ class _CommunityState extends State<Community> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => CreateCommunity()));
         },
-        backgroundColor: MStyles.lightBgColor,
+        backgroundColor: Colors.white,
         child: Icon(
           Icons.add_rounded,
           size: 32,
-          color: Colors.white,
+          color: MStyles.pColor,
         ),
       ),
       appBar: AppBar(
@@ -108,7 +108,7 @@ class _CommunityState extends State<Community> {
                       child: Row(
                         children: const [
                           Icon(
-                            Icons.menu,
+                            Icons.filter_list_rounded,
                             color: Colors.white,
                           ),
                           SizedBox(

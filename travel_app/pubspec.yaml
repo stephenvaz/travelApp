@@ -37,7 +37,9 @@ dependencies:
     sdk: flutter
   flutter_bcrypt: ^1.0.8
   flutter_google_places_hoc081098: ^1.2.0
+  flutter_phone_direct_caller: ^2.1.1
   flutter_screenutil: ^5.6.1
+  flutter_sms: ^2.3.3
   geolocator: ^9.0.2
   get: ^4.6.5
   get_storage: ^2.1.1

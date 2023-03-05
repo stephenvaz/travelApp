@@ -9,7 +9,7 @@ class Api {
 
   //  static var BASE_URL = MLocalStorage().getBaseUrl();
   static var BASE_URL =
-      "https://dd15-2402-3a80-1646-8b92-346c-4f9-e9a-bf56.in.ngrok.io";
+      "https://0a62-2409-40c0-101f-1fc6-1cd4-d7f6-7a73-826.in.ngrok.io";
 
   static final LOGIN_URL = BASE_URL + "/login";
   static final LOGOUT_URL = BASE_URL + "/users/logout";
@@ -21,6 +21,13 @@ class Api {
   static final ADD_TRIP = BASE_URL + "/add-trip";
   static final CREATE_COMMUNITY = BASE_URL + "/create";
   static final GET_COMMUNITY = BASE_URL + "/get-comm";
+  static final NEARBY = BASE_URL + "/get-nearby";
+  static final SEND = BASE_URL + "/friend_req_send";
+  static final RECVREQ = BASE_URL + "/get_recv_list";
+  static final ACCEPT = BASE_URL + "/friend_req_accept";
+  static final REJECT = BASE_URL + "/friend_remove";
+  static final PEND = BASE_URL + "/get_pending_list";
+
   var formData;
 
   Future<dynamic> login(String email, String password) {
@@ -29,6 +36,27 @@ class Api {
     print(formData);
 
     return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> recvreq(String email) {
+//no do it their side
+    formData = FormData.fromMap({"email": email});
+    print(formData);
+
+    return _netUtil.post(RECVREQ, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+  Future<dynamic> pending(String email) {
+//no do it their side
+    formData = FormData.fromMap({"email": email});
+    print(formData);
+
+    return _netUtil.post(PEND, formData).then((dynamic res) {
       print(res.toString());
       return res;
     });
@@ -53,6 +81,44 @@ class Api {
     print(formData);
     return _netUtil.post(CREATE_COMMUNITY, formData).then((dynamic res) {
       print(res.toString());
+      return res;
+    });
+  }
+
+  Future<dynamic> getNearby(String email) {
+    print('performing post');
+    // print(jsonEncode(data));
+    formData = FormData.fromMap({"email": email});
+    // formData = FormData.fromMap(data);
+    // print(formData);
+    return _netUtil.post(NEARBY, formData).then((dynamic res) {
+      // print(res.toString());
+      print(res);
+      return res;
+    });
+  }
+
+  Future<dynamic> send(String e1, String e2) {
+    formData = FormData.fromMap({"to": e1, "from": e2});
+    return _netUtil.post(SEND, formData).then((dynamic res) {
+      // print(res.toString());
+      print(res);
+      return res;
+    });
+  }
+  Future<dynamic> accept(String e1, String e2) {
+    formData = FormData.fromMap({"target": e1, "user": e2});
+    return _netUtil.post(ACCEPT, formData).then((dynamic res) {
+      // print(res.toString());
+      print(res);
+      return res;
+    });
+  }
+   Future<dynamic> reject(String e1, String e2) {
+    formData = FormData.fromMap({"target": e1, "user": e2});
+    return _netUtil.post(REJECT, formData).then((dynamic res) {
+      // print(res.toString());
+      print(res);
       return res;
     });
   }

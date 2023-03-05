@@ -7,6 +7,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:travel_app/components/community.dart';
 import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/components/profile.dart';
+import 'package:travel_app/components/similar.dart';
+import 'package:travel_app/components/sos.dart';
 import 'package:travel_app/firebase_options.dart';
 import 'package:travel_app/registration.dart';
 import 'package:travel_app/utils/MStyles.dart';
@@ -48,7 +50,9 @@ class MyApp extends StatelessWidget {
           // home: const BasicIntro(),
           // home: const LoginScreen(),
           // home: LoginScreenV3(),
-          home: Community(),
+          home: SimilarTrip(),
+          // home: MapSearch(),
+          // home: SOS(),
         );
       },
     );
