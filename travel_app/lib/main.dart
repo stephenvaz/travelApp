@@ -55,10 +55,11 @@ class MyApp extends StatelessWidget {
           // home: MapSearch(),
           // home: SignUpV2(),
           home: Home(),
+          // home: SimilarTrip(),
           // home: Profile(),
 
           //merge and integrate
-          // home: MessagingScreen(
+          // home: MessagingScreen()
           //
           // ),
         );
