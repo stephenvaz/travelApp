@@ -29,11 +29,11 @@ class Api {
   static final ACCEPT = BASE_URL + "/friend_req_accept";
   static final REJECT = BASE_URL + "/friend_remove";
   static final PEND = BASE_URL + "/get_pending_list";
+  static final TRIP = BASE_URL + "/get-trips";
 
   var formData;
 
   Future<dynamic> login(String email, String password) {
-    
 //no do it their side
     formData = FormData.fromMap({"email": email, "password": password});
     print(formData);
@@ -44,7 +44,7 @@ class Api {
     });
   }
 
-   Future<dynamic> pending(String email) {
+  Future<dynamic> pending(String email) {
 //no do it their side
     formData = FormData.fromMap({"email": email});
     print(formData);
@@ -55,7 +55,7 @@ class Api {
     });
   }
 
-    Future<dynamic> recvreq(String email) {
+  Future<dynamic> recvreq(String email) {
 //no do it their side
     formData = FormData.fromMap({"email": email});
     print(formData);
@@ -77,16 +77,21 @@ class Api {
     print(formData);
 
     return _netUtil.post(CREATE_ACC, formData).then((dynamic res) {
-
       print(res.toString());
       return res;
     });
   }
 
-  Future<dynamic> createProfile(String bio, List<String> interests, String city,
-      String dob, String gender, List<String> emergency_phone_number, String imgStr) {
+  Future<dynamic> createProfile(
+      String bio,
+      List<String> interests,
+      String city,
+      String dob,
+      String gender,
+      List<String> emergency_phone_number,
+      String imgStr) {
     formData = FormData.fromMap({
-    "email": MLocalStorage().getEmailId(),
+      "email": MLocalStorage().getEmailId(),
       "bio": bio,
       "interests": interests,
       "city": city,
@@ -102,10 +107,7 @@ class Api {
     });
   }
 
-  
-
-    Future<dynamic> addTrip(var data) {
-
+  Future<dynamic> addTrip(var data) {
     // print('performing post');
     // print(jsonEncode(data));
     formData = FormData.fromMap(data);
@@ -149,6 +151,7 @@ class Api {
       return res;
     });
   }
+
   Future<dynamic> accept(String e1, String e2) {
     formData = FormData.fromMap({"target": e1, "user": e2});
     return _netUtil.post(ACCEPT, formData).then((dynamic res) {
@@ -157,11 +160,23 @@ class Api {
       return res;
     });
   }
-   Future<dynamic> reject(String e1, String e2) {
+
+  Future<dynamic> reject(String e1, String e2) {
     formData = FormData.fromMap({"target": e1, "user": e2});
     return _netUtil.post(REJECT, formData).then((dynamic res) {
       // print(res.toString());
       print(res);
+      return res;
+    });
+  }
+
+  Future<dynamic> trips(String email) {
+    // print('performing post');
+    // print(jsonEncode(data));
+    formData = FormData.fromMap({"email": email});
+    print(formData);
+    return _netUtil.post(TRIP, formData).then((dynamic res) {
+      print(res.toString());
       return res;
     });
   }
@@ -199,7 +214,6 @@ class Api {
   //     return res;
   //   });
   // }
-
 
   Future<dynamic> logout({logout_loc_lat = "-999", logout_loc_lng = "-999"}) {
     return _netUtil
