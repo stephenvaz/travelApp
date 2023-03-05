@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app/components/community.dart';
 import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/components/profile.dart';
 import 'package:travel_app/components/similar.dart';
