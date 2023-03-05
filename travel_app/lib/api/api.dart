@@ -12,6 +12,8 @@ class Api {
       "https://0a62-2409-40c0-101f-1fc6-1cd4-d7f6-7a73-826.in.ngrok.io";
 
   static final LOGIN_URL = BASE_URL + "/login";
+  static final CREATE_ACC = BASE_URL + "/create_acc";
+  static final CREATE_PROFILE = BASE_URL + "/create_profile";
   static final LOGOUT_URL = BASE_URL + "/users/logout";
   static final CHANGE_STATE_URL = BASE_URL + "/game" + "/change_state";
   static final GET_CLUE_FROM_CID = BASE_URL + "/game" + "/get_clue_from_cid";
@@ -41,7 +43,7 @@ class Api {
     });
   }
 
-  Future<dynamic> recvreq(String email) {
+    Future<dynamic> recvreq(String email) {
 //no do it their side
     formData = FormData.fromMap({"email": email});
     print(formData);
@@ -51,18 +53,47 @@ class Api {
       return res;
     });
   }
-  Future<dynamic> pending(String email) {
-//no do it their side
-    formData = FormData.fromMap({"email": email});
+
+  Future<dynamic> createAccount(
+      String name, String phone_number, String email, String password) {
+    formData = FormData.fromMap({
+      "name": name,
+      "phone_number": phone_number,
+      "email": email,
+      "password": password
+    });
     print(formData);
 
-    return _netUtil.post(PEND, formData).then((dynamic res) {
+    return _netUtil.post(CREATE_ACC, formData).then((dynamic res) {
+
       print(res.toString());
       return res;
     });
   }
 
-  Future<dynamic> addTrip(var data) {
+  Future<dynamic> createProfile(String bio, List<String> interests, String city,
+      String dob, String gender, List<String> emergency_phone_number, String imgStr) {
+    formData = FormData.fromMap({
+    "email": MLocalStorage().getEmailId(),
+      "bio": bio,
+      "interests": interests,
+      "city": city,
+      "dob": dob,
+      "gender": gender,
+      "emergency_phone_number": emergency_phone_number,
+      "profile_photo": imgStr
+    });
+
+    return _netUtil.post(CREATE_PROFILE, formData).then((dynamic res) {
+      print(res.toString());
+      return res;
+    });
+  }
+
+  
+
+    Future<dynamic> addTrip(var data) {
+
     // print('performing post');
     // print(jsonEncode(data));
     formData = FormData.fromMap(data);
@@ -140,11 +171,23 @@ class Api {
     formData = FormData.fromMap({"email": email, "password": password});
     print(formData);
 
-    return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
+    return _netUtil.post(CREATE_PROFILE, formData).then((dynamic res) {
       print(res.toString());
       return res;
     });
   }
+
+  // Future<dynamic> signUp(
+  //     String email, String password, List<String> interestArr) {
+  //   formData = FormData.fromMap({"email": email, "password": password});
+  //   print(formData);
+  //
+  //   return _netUtil.post(LOGIN_URL, formData).then((dynamic res) {
+  //     print(res.toString());
+  //     return res;
+  //   });
+  // }
+
 
   Future<dynamic> logout({logout_loc_lat = "-999", logout_loc_lng = "-999"}) {
     return _netUtil

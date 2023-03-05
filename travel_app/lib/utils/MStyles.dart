@@ -7,6 +7,7 @@ class MStyles {
   // static final pColor = Color(0xff2e92da);
   // static final pColor = Color(0xFF00AAAC);
   static final pColor = Color(0xFF6199F7);
+  static final lightpColor = Color(0xFFD7E5FD);
   static final darkGreenBgColor2 = Color(0xFF103928);
   static final greenColor = Color(0xFF43CD66);
   static final harshadGreenColor = Color(0xFF8BDF95);
@@ -21,10 +22,14 @@ class MStyles {
   static final pColorWithTransparency  = Color(0xcc2e92da);
 
   static final primaryTextStyle = GoogleFonts.poppins(
-    // fontFamily: 'Abraham',
-      color: Colors.black,
-      fontSize: 18.w,
-      fontWeight: FontWeight.w500);
+    fontWeight: FontWeight.w600,
+    fontSize: 18.w,
+  );
+  // static final primaryTextStyle = GoogleFonts.poppins(
+  //   // fontFamily: 'Abraham',
+  //     color: Colors.black,
+  //     fontSize: 18.w,
+  //     fontWeight: FontWeight.w500);
 
   static final bgv2 = Color(0xFF6199F7);
 
