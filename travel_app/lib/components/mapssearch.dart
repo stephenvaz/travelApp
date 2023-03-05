@@ -8,6 +8,7 @@ import 'package:google_maps_webservice/places.dart';
 
 //api
 import 'package:travel_app/api/api.dart';
+import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 
 class MapSearch extends StatefulWidget {
@@ -29,7 +30,6 @@ class _MapSearchState extends State<MapSearch> {
   GoogleMapController? mapController; //co5ntrller for Google map
   CameraPosition? cameraPosition;
   LatLng startLocation = LatLng(19.107380265566505, 72.837150475571);
-
   // String source = "Source";
   // String destination = "Destination";
   String description = "";
@@ -462,117 +462,116 @@ class _MapSearchState extends State<MapSearch> {
                                               items: interestChips,
                                               // label: "Select Frequency",
 
-                                              onChanged: (value) {
-                                                // setState(() {
-                                                //   frequency = value;
-                                                // });
-                                                setState(() {
-                                                  selectedChip.add(value!);
-                                                });
-                                                print(value);
-                                              },
-                                            ),
+                                            onChanged: (value) {
+                                              // setState(() {
+                                              //   frequency = value;
+                                              // });
+                                              setState(() {
+                                                selectedChip.add(value!);
+                                              });
+                                              print(value);
+                                            },
                                           ),
-                                          Container(
-                                            height: 100,
-                                            child: ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: selectedChip.length,
-                                                scrollDirection: Axis.horizontal,
-                                                itemBuilder: (context, index) {
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(8.0),
-                                                    child: Chip(
-                                                      label: Text(
-                                                          selectedChip[index]),
-                                                    ),
-                                                  );
-                                                }),
-                                          ),
-                                          Obx(() {
-                                            return (!submitted.value)
-                                                ? ElevatedButton(
-                                                    onPressed: () async {
-                                                      submitted.value = true;
-                                                      var newstops = [];
-                                                      newstops.add(startObject);
-                                                      for (int i = 0;
-                                                          i < submitStops.length;
-                                                          i++) {
-                                                        newstops
-                                                            .add(submitStops[i]);
-                                                      }
-                                                      newstops.add(endObject);
-                                                      String status =
-                                                          "Not Yet Started";
-                                                      if (DateTime.now()
-                                                          .isAfter(startDate)) {
-                                                        status = "Started";
-                                                      }
+                                        ),
+                                        Container(
+                                          height: 100,
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: selectedChip.length,
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Chip(
+                                                    label: Text(
+                                                        selectedChip[index]),
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                        Obx(() {
+                                          return (!submitted.value)
+                                              ? ElevatedButton(
+                                                  onPressed: () async {
+                                                    submitted.value = true;
+                                                    var newstops = [];
+                                                    newstops.add(startObject);
+                                                    for (int i = 0;
+                                                        i < submitStops.length;
+                                                        i++) {
+                                                      newstops
+                                                          .add(submitStops[i]);
+                                                    }
+                                                    newstops.add(endObject);
+                                                    String status =
+                                                        "Not Yet Started";
+                                                    if (DateTime.now()
+                                                        .isAfter(startDate)) {
+                                                      status = "Started";
+                                                    }
 
-                                                      var payload = {
-                                                        "start_date": startDate,
-                                                        "end_date": endDate,
-                                                        "stops": newstops,
-                                                        "mode_of_transport":
-                                                            transport,
-                                                        "interests": selectedChip,
-                                                        "status": status
-                                                      };
-                                                      Map res = await Api()
-                                                          .addTrip(payload);
-                                                      // print(r)
+                                                    var payload = {
+                                                      "start_date": startDate,
+                                                      "end_date": endDate,
+                                                      "stops": newstops,
+                                                      "mode_of_transport":
+                                                          transport,
+                                                      "interests": selectedChip,
+                                                      "status": status
+                                                    };
+                                                    Map res = await Api()
+                                                        .addTrip(payload);
+                                                    // print(r)
 
-                                                      print("payload");
-                                                      print(payload);
-                                                      if (res['status'] == 1) {
-                                                        print("successful");
-                                                        Get.closeAllSnackbars();
-                                                        Get.snackbar('Succesful',
-                                                            "Trip Added",
-                                                            backgroundColor:
-                                                                MStyles.pColor);
+                                                    print("payload");
+                                                    print(payload);
+                                                    if (res['status'] == 1) {
+                                                      print("successful");
+                                                      Get.closeAllSnackbars();
+                                                      Get.snackbar('Succesful',
+                                                          "Trip Added",
+                                                          backgroundColor:
+                                                              MStyles.pColor);
 
-                                                        //TODO: NAVIGATE TO SOME OTHER SCREEN, MAYBE PROFILE OR JUST POP BACK
-                                                      } else {
-                                                        Get.closeAllSnackbars();
-                                                        Get.snackbar("Error",
-                                                            "Please try again");
-                                                      }
-                                                      submitted.value = false;
-                                                    },
-                                                    style: ButtonStyle(
-                                                      side:
-                                                          MaterialStatePropertyAll(
-                                                              BorderSide(
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white)),
-                                                      shape: MaterialStateProperty
-                                                          .all(RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          32))),
-                                                    ),
-                                                    child: Text("Submit"))
-                                                : const CircularProgressIndicator();
-                                          })
-                                        ],
-                                      );
-                              })
-                            ],
-                          ),
+                                                      //TODO: NAVIGATE TO SOME OTHER SCREEN, MAYBE PROFILE OR JUST POP BACK
+                                                    } else {
+                                                      Get.closeAllSnackbars();
+                                                      Get.snackbar("Error",
+                                                          "Please try again");
+                                                    }
+                                                    submitted.value = false;
+                                                  },
+                                                  style: ButtonStyle(
+                                                    side:
+                                                        MaterialStatePropertyAll(
+                                                            BorderSide(
+                                                                width: 2,
+                                                                color: Colors
+                                                                    .white)),
+                                                    shape: MaterialStateProperty
+                                                        .all(RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        32))),
+                                                  ),
+                                                  child: Text("Submit"))
+                                              : const CircularProgressIndicator();
+                                        })
+                                      ],
+                                    );
+                            })
+                          ],
                         ),
                       ),
                     ),
-                  );
-                },
-              )),
-            ]));
-      }), tween: Tween<double>(begin: 0, end: 1),duration: Duration(milliseconds: 1000),
-    );
+                  ),
+                );
+              },
+            )),
+          ]));
+    });
   }
 }
 
@@ -585,7 +584,6 @@ class TripContainer extends StatefulWidget {
       this.stopslist,
       this.index,
       this.srcDest});
-
   String? location;
   final GoogleMapController? mapController;
   final String googleApikey;
@@ -630,8 +628,7 @@ class _TripContainerState extends State<TripContainer> {
                   if (place != null) {
                     setState(() {
                       if (widget.index != null) {
-                        widget.stopslist
-                            ?.add(place.description.toString());
+                        widget.stopslist?.add(place.description.toString());
                         added = true;
                       } else {
                         widget.location = place.description.toString();
@@ -645,8 +642,7 @@ class _TripContainerState extends State<TripContainer> {
                       //from google_api_headers package
                     );
                     String placeid = place.placeId ?? "0";
-                    final detail =
-                    await plist.getDetailsByPlaceId(placeid);
+                    final detail = await plist.getDetailsByPlaceId(placeid);
                     final geometry = detail.result.geometry!;
                     final lat = geometry.location.lat;
                     final lang = geometry.location.lng;
@@ -654,8 +650,8 @@ class _TripContainerState extends State<TripContainer> {
 
                     //move map camera to selected place with animation
                     widget.mapController?.animateCamera(
-                        CameraUpdate.newCameraPosition(CameraPosition(
-                            target: newlatlang, zoom: 17)));
+                        CameraUpdate.newCameraPosition(
+                            CameraPosition(target: newlatlang, zoom: 17)));
                     //create object of below three values
                     print(place.description);
                     print(lat);
@@ -697,8 +693,8 @@ class _TripContainerState extends State<TripContainer> {
                     child: Text(
                       (widget.index != null)
                           ? (added)
-                          ? widget.stopslist![widget.index!]
-                          : "Add Stop"
+                              ? widget.stopslist![widget.index!]
+                              : "Add Stop"
                           : widget.location,
                       style: TextStyle(fontSize: 18),
                     ),
