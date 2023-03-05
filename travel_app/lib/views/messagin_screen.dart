@@ -22,17 +22,20 @@ final myEmail = "v@p";
 final mSC = ScrollController();
 
 class MessagingScreen extends StatefulWidget {
-  MessagingScreen({Key? key}) : super(key: key);
+  final profilePicWidget;
+  final sender;
+  final receiver;
+
+  final String friendName;
+
+  const MessagingScreen({super.key, required this.profilePicWidget, required this.sender, required this.receiver, required this.friendName});
+
 
   @override
   State<MessagingScreen> createState() => _MessagingScreenState();
 }
 
 class _MessagingScreenState extends State<MessagingScreen> {
-  final sender = "v@p";
-
-  final receiver = "s@v";
-
   @override
   void initState() {
     mN.addListener(() async {
@@ -159,10 +162,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
         title: Row(
           children: [
             ClipOval(
-                child: Image.asset(
-              'assets/images/sign_up_banner.png',
-              height: 42,
-            )),
+                child:  widget.profilePicWidget
+            //     Image.asset(
+            //   'assets/images/sign_up_banner.png',
+            //   height: 42,
+            // )
+            ),
             SizedBox(
               width: 8,
             ),
@@ -170,7 +175,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Pulkit Malhotra",
+                  // "Pulkit Malhotra"
+              widget.friendName
+                  ,
                   style: GoogleFonts.poppins(
                       fontSize: 18, fontWeight: FontWeight.w600),
                 ),
@@ -347,8 +354,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       count = (count % 2);
 
                       theP.add({
-                        "sender": count == 0 ? sender : receiver,
-                        "receiver": count != 0 ? sender : receiver,
+                        "sender": count == 0 ? widget.sender : widget.receiver,
+                        "receiver":
+                            count != 0 ? widget.sender : widget.receiver,
                         "sent_at": DateTime.now().millisecondsSinceEpoch,
                         "name": message.text,
                         "message": message.text

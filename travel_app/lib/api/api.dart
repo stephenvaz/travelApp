@@ -8,11 +8,13 @@ class Api {
 
   //  static var BASE_URL = MLocalStorage().getBaseUrl();
   static var BASE_URL =
-  "https://dd15-2402-3a80-1646-8b92-346c-4f9-e9a-bf56.in.ngrok.io";
-
+  // "https://dd15-2402-3a80-1646-8b92-346c-4f9-e9a-bf56.in.ngrok.io";
+  // "https://07a4-2409-40c0-1028-2ab6-bd10-fc8b-ac21-bd58.in.ngrok.io";
+"https://0a62-2409-40c0-101f-1fc6-1cd4-d7f6-7a73-826.in.ngrok.io";
   static final LOGIN_URL = BASE_URL + "/login";
   static final CREATE_ACC = BASE_URL + "/create_acc";
-  static final CREATE_PROFILE = BASE_URL + "/create_profile";
+  // static final CREATE_PROFILE = BASE_URL + "/create_profile";
+  static final CREATE_PROFILE = BASE_URL + "/profile";
   static final LOGOUT_URL = BASE_URL + "/users/logout";
   static final CHANGE_STATE_URL = BASE_URL + "/game" + "/change_state";
   static final GET_CLUE_FROM_CID = BASE_URL + "/game" + "/get_clue_from_cid";

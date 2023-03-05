@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travel_app/components/custom_text_field.dart';
 import 'package:travel_app/controller/CreateProfileController.dart';
+import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/views/sign_upv2.dart';
 
@@ -14,7 +15,7 @@ final createProfileController = CreateProfileController();
 
 class CreateProfile extends StatelessWidget {
   var imageFile;
-  RxBool clicked = true.obs;
+  RxBool clicked = false.obs;
 
   late String img64;
 
@@ -32,7 +33,7 @@ class CreateProfile extends StatelessWidget {
       final bytes = await imageFile.readAsBytes();
       img64 = base64Encode(bytes);
       createProfileController.imgString = img64;
-
+      MLocalStorage().writeImage(img64);
     } else {
       clicked.value = false;
     }
@@ -50,9 +51,8 @@ class CreateProfile extends StatelessWidget {
       imageFile = File(pickedFile.path);
       final bytes = await imageFile.readAsBytes();
       img64 = base64Encode(bytes);
-
+      MLocalStorage().writeImage(img64);
       createProfileController.imgString = img64;
-
       clicked.value = true;
     } else {
       clicked.value = false;

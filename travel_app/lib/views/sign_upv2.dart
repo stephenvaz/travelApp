@@ -103,7 +103,7 @@ class SignUpV2 extends StatelessWidget {
                       }
 
                       //test
-                      Get.off(() => CreateProfile());
+                      // Get.off(() => CreateProfile());
                       createAccController.toggleLoginLoading();
                     })
                   ],

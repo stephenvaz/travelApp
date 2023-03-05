@@ -46,6 +46,16 @@ class MLocalStorage {
     box.write("token", t);
   }
 
+  void writeImage(String t) {
+    box.write("image", t);
+  }
+
+  String getImage() {
+    final tid = box.read("token");
+    print(tid);
+    return tid ?? "-999";
+  }
+
   void writeStartDateTime(String t) {
     box.write("start_date_time", t);
   }
