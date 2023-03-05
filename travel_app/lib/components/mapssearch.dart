@@ -571,7 +571,7 @@ class _MapSearchState extends State<MapSearch> {
               },
             )),
           ]));
-    });
+    }), tween: Tween<double>(begin: 0, end: 1), curve: Curves.decelerate, duration: Duration(milliseconds: 1000),);
   }
 }
 
