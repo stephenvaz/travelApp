@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/components/profile.dart';
+import 'package:travel_app/components/similar.dart';
 import 'package:travel_app/controller/HomeController.dart';
 import 'package:travel_app/utils/MStyles.dart';
 import 'package:travel_app/views/recent_chats_screen.dart';
@@ -220,12 +221,12 @@ class Home extends StatelessWidget {
 
               // Similar(),
               MapSearch(),
-
-              Container(
-                color: Colors.orange,
-                width: 100,
-                height: 80,
-              ),
+              SimilarTrip(),
+              // Container(
+              //   color: Colors.orange,
+              //   width: 100,
+              //   height: 80,
+              // ),
               RecentChats()
               // Container(
               //   color: Colors.orange,

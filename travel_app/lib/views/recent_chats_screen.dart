@@ -9,7 +9,7 @@ class RecentChats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // recentChatsContoller.name();
+    recentChatsContoller.name();
     //gte
     return Obx(
       () => SafeArea(
@@ -18,7 +18,7 @@ class RecentChats extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               itemBuilder: (context, index) => Text("data"),
-              itemCount: recentChatsContoller.friends.value.length,
+              itemCount: recentChatsContoller.chats.value.length,
             ),
           ),
         ),
