@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:travel_app/api/api.dart';
 import 'package:travel_app/utils/MLocalStorage.dart';
 import 'package:travel_app/utils/generic_util.dart';
+import 'package:travel_app/views/home.dart';
 
 class LoginController extends GetxController {
   // final email = "".obs;
@@ -29,14 +30,15 @@ class LoginController extends GetxController {
     // if (!res.containsKey('token')) {
     //   GenericUtil.snackGeneric("Failed", "Login Failed");
     // } else {
-      if(res["status"] == 1)
-      {GenericUtil.snackSuccess();
+    if (res["status"] == 1) {
+      GenericUtil.snackSuccess();
       // MLocalStorage().writeToken(res["token"]);
       MLocalStorage().setEmailId(email.text);
-      print(MLocalStorage().getEmailId());}
-      else {
-        GenericUtil.snackGeneric("Failed", "Login Failed");
-      }
+      print(MLocalStorage().getEmailId());
+      Get.offAll(Home());
+    } else {
+      GenericUtil.snackGeneric("Failed", "Login Failed");
+    }
     // }
     toggleLoginLoading();
   }
@@ -54,7 +56,7 @@ class LoginController extends GetxController {
         .doc('global_data')
         .get();
     // Api.BASE_URL = data['base_url'];
-    Api.BASE_URL = 'https://2d15-2409-40c0-1006-a7b-6187-d5bb-34c3';
+    Api.BASE_URL = 'https://ba43-2409-40c0-7b-167d-a86a-513c-5cdc-a4b5.in.ngrok.io';
     // GeoPoint test = GeoPoint(123, 324);
   }
 }

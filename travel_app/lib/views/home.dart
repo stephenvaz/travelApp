@@ -292,7 +292,7 @@ class Home extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.person),
                   onPressed: () {
-                    Get.to(() => Profile());
+                    Get.to(() => Community());
                   },
                 ),
               ),

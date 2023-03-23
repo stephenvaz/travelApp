@@ -25,7 +25,7 @@ class SignUpV2 extends StatelessWidget {
           // alignment: Alignment.bottomCenter,
           children: [
             Transform.translate(
-              offset: Offset(0,-40),
+                offset: Offset(0, -40),
                 child: Image.asset('assets/images/sign_up_banner.png')),
             Align(
               alignment: Alignment.bottomCenter,
@@ -72,7 +72,7 @@ class SignUpV2 extends StatelessWidget {
                       ),
                       // MTextField(label: "Password", mcont: createAccController.password,),
                       Obx(
-                            () => TextField(
+                        () => TextField(
                           obscureText: createAccController.isHidden.value,
                           controller: createAccController.password,
                           decoration: InputDecoration(
@@ -93,7 +93,9 @@ class SignUpV2 extends StatelessWidget {
                         ),
                       ),
                       // Spacer(),
-                      SizedBox(height: 16,),
+                      SizedBox(
+                        height: 16,
+                      ),
                       buildElevatedButton("CREATE", () async {
                         createAccController.toggleLoginLoading();
                         final res = await Api().createAccount(
@@ -103,22 +105,30 @@ class SignUpV2 extends StatelessWidget {
                             createAccController.password.text);
                         if (res["status"] == 1) {
                           GenericUtil.snackSuccess();
-                          MLocalStorage().setEmailId(createAccController.email.text);
+                          MLocalStorage()
+                              .setEmailId(createAccController.email.text);
                           Get.off(() => CreateProfile());
-
                         } else {
-                          GenericUtil.snackGeneric("Failed to create account", "Ensure all fields are filled properly");
+                          GenericUtil.snackGeneric("Failed to create account",
+                              "Ensure all fields are filled properly");
                         }
 
                         //test
                         // Get.off(() => CreateProfile());
                         createAccController.toggleLoginLoading();
                       }),
-                      TextButton(onPressed: () {
-                        Get.to(() => LoginScreenV3());
-                      }, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Text("Already have an account? Login Instead", textAlign: TextAlign.center,)]))
+                      TextButton(
+                          onPressed: () {
+                            Get.to(() => LoginScreenV3());
+                          },
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Already have an account? Login Instead",
+                                  textAlign: TextAlign.center,
+                                )
+                              ]))
                     ],
                   ),
                 ),
@@ -132,19 +142,17 @@ class SignUpV2 extends StatelessWidget {
             Obx(() => !createAccController.isLoginLoading.value
                 ? SizedBox()
                 : TweenAnimationBuilder(
-              tween: Tween(begin: 0, end: 0.5),
-              duration: Duration(milliseconds: 500),
-              builder:
-                  (BuildContext context, Object? value, Widget? child) {
-                return Positioned.fill(
-                    child: Container(
-                      color: MStyles.darkBgColor
-                          .withOpacity(double.parse(value.toString())),
-                      child: Center(child: CircularProgressIndicator()),
-                    ));
-              },
-            ))
-
+                    tween: Tween(begin: 0, end: 0.5),
+                    duration: Duration(milliseconds: 500),
+                    builder:
+                        (BuildContext context, Object? value, Widget? child) {
+                      return Positioned.fill(
+                          child: Container(
+                        color: Colors.transparent,
+                        child: Center(child: CircularProgressIndicator()),
+                      ));
+                    },
+                  ))
           ],
         ),
       ),

@@ -33,8 +33,14 @@ class CreateProfileController extends GetxController {
   createProfile() async {
     toggleLoginLoading();
 
-    final res = await Api().createProfile(bio.text, interests.text.split(" "),
-        city.text, dob.text, gender.text, emergencyNum.text.split(" "), imgString);
+    final res = await Api().createProfile(
+        bio.text,
+        interests.text.split(" "),
+        city.text,
+        dob.text,
+        gender.text,
+        emergencyNum.text.split(" "),
+        imgString);
     if (res["status"] != 1) {
       GenericUtil.snackGeneric(
           "Failed to create profile", "Ensure all fields are filled properly");
@@ -64,7 +70,7 @@ class CreateProfileController extends GetxController {
     // Api.BASE_URL = data['base_url'];
     // Api.BASE_URL = data['base_url'];
     // Api.BASE_URL = 'https://5c93-2409-40c0-18-d14f-b596-2ec5-91df-bd79.in.ngrok.io';
-    Api.BASE_URL = 'https://2d15-2409-40c0-1006-a7b-6187-d5bb-34c3-8d31.in.ngrok.io';
+    Api.BASE_URL = 'https://ba43-2409-40c0-7b-167d-a86a-513c-5cdc-a4b5.in.ngrok.io';
     // GeoPoint test = GeoPoint(123, 324);
   }
 }

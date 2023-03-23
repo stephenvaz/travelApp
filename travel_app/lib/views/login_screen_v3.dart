@@ -18,8 +18,6 @@ class LoginScreenV3 extends StatelessWidget {
             child: Stack(
           alignment: Alignment.center,
           children: [
-
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -29,7 +27,8 @@ class LoginScreenV3 extends StatelessWidget {
                   TextField(
                     controller: loginController.email,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: "Email Address"),
+                        border: OutlineInputBorder(),
+                        labelText: "Email Address"),
                   ),
                   SizedBox(
                     height: 16.w,
@@ -52,7 +51,10 @@ class LoginScreenV3 extends StatelessWidget {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 0.w, vertical: 30.w),
-                    child: ElevatedButton(onPressed: () => loginController.login(), child: Text("LOGIN"),),
+                    child: ElevatedButton(
+                      onPressed: () => loginController.login(),
+                      child: Text("LOGIN"),
+                    ),
                   ),
                   SizedBox(
                     height: 100.h,
@@ -69,9 +71,20 @@ class LoginScreenV3 extends StatelessWidget {
                         (BuildContext context, Object? value, Widget? child) {
                       return Positioned.fill(
                           child: Container(
-                        color: MStyles.darkBgColor
-                            .withOpacity(double.parse(value.toString())),
-                        child: Center(child: CircularProgressIndicator()),
+                        // color: MStyles.darkBgColor
+                        //     .withOpacity(double.parse(value.toString())),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 22.0),
+                          child: Center(
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(32)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: CircularProgressIndicator(),
+                                  ))),
+                        ),
                       ));
                     },
                   ))

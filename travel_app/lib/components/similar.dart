@@ -113,21 +113,26 @@ class _SimilarTripState extends State<SimilarTrip> {
           ),
           Expanded(
             child: Obx(() {
-              return   (!_type.value)
+              return (!_type.value)
                   ? (!_isLoading.value)
-                      ? _nearby.isEmpty ? Text("No Nearby Trips Found", style: MStyles.primaryTextStyle,) : ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return RequestTile(
-                              name: _nearby[index]["name"],
-                              source: _nearby[index]["start_location"],
-                              destination: _nearby[index]["end_location"],
-                              date: _nearby[index]["start_date"],
-                              email: _nearby[index]["user"],
-                            );
-                          },
-                          itemCount: _nearby.length)
+                      ? _nearby.isEmpty
+                          ? Text(
+                              "No Nearby Trips Found",
+                              style: MStyles.primaryTextStyle,
+                            )
+                          : ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return RequestTile(
+                                  name: _nearby[index]["name"],
+                                  source: _nearby[index]["start_location"],
+                                  destination: _nearby[index]["end_location"],
+                                  date: _nearby[index]["start_date"],
+                                  email: _nearby[index]["user"],
+                                );
+                              },
+                              itemCount: _nearby.length)
                       : const CircularProgressIndicator()
                   : BottomSheet();
             }),
@@ -158,6 +163,7 @@ class _BottomSheetState extends State<BottomSheet> {
   void initState() {
     super.initState();
     _isLoadingPend.value = true;
+    print(MLocalStorage().getEmailId());
     Api().pending(MLocalStorage().getEmailId()).then((value) {
       Map data = value;
       pend = data['list'];
@@ -183,18 +189,18 @@ class _BottomSheetState extends State<BottomSheet> {
             children: [
               InkWell(
                 onTap: () async {
-                  if (_isLoadingPend.value) {
-                    return;
-                  }
+                  // if (_isLoadingPend.value) {
+                  //   return;
+                  // }
                   _isPending.value = !_isPending.value;
-                  if (_isPending.value) {
+                  // if (_isPending.value) {
                     _isLoadingPend.value = true;
                     Api().pending(MLocalStorage().getEmailId()).then((value) {
                       Map data = value;
                       pend = data['list'];
                       _isLoadingPend.value = false;
                     });
-                  }
+                  // }
                 },
                 child: Obx(() {
                   return Container(
@@ -218,9 +224,9 @@ class _BottomSheetState extends State<BottomSheet> {
               ),
               InkWell(
                 onTap: () {
-                  if (_isLoadingRecvd.value) {
-                    return;
-                  }
+                  // if (_isLoadingRecvd.value) {
+                  //   return;
+                  // }
                   _isPending.value = !_isPending.value;
                   if (!_isPending.value) {
                     _isLoadingRecvd.value = true;

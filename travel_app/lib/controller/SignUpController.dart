@@ -50,6 +50,7 @@ class SignUpController extends GetxController {
     // Api.BASE_URL = data['base_url'];
     Api.BASE_URL = data['base_url'];
     Api.BASE_URL = data['base_url'];
+    
     // GeoPoint test = GeoPoint(123, 324);
 
   }

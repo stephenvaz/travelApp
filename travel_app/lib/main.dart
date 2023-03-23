@@ -10,6 +10,7 @@ import 'package:travel_app/components/profile.dart';
 import 'package:travel_app/components/similar.dart';
 import 'package:travel_app/components/sos.dart';
 import 'package:travel_app/components/trips.dart';
+import 'package:travel_app/components/mapssearch.dart';
 import 'package:travel_app/firebase_options.dart';
 import 'package:travel_app/registration.dart';
 import 'package:travel_app/utils/MStyles.dart';
@@ -56,9 +57,13 @@ class MyApp extends StatelessWidget {
           // home: LoginScreenV3(),
           // home: LoginScreenV3(),
           // home: Trips(),
-          home: Home(),
-          // home: SignUpV2(),
           // home: Home(),
+          // home: SignUpV2(),
+          // home: SimilarTrip(),
+          home: MapSearch(),
+          // home: Community(),
+          // home: Home(),
+          // home: LoginScreenV3(),
           // home: Profile(),
 
           //merge and integrate
